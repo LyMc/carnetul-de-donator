@@ -1,11 +1,12 @@
 {
   "name": "carnetul-de-donator",
-  "version": "0.0.0",
-  "description": "Hello Expo!",
-  "author": null,
+  "version": "1.0.0",
+  "description": "Carnetul de donator.",
+  "author": "victor@locoman.ro",
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "@expo/ex-navigation": "^2.11.1",
     "expo": "16.0.0",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-16.0.0.tar.gz"
