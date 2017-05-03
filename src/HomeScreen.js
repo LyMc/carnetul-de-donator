@@ -1,25 +1,18 @@
 import React from 'react'
 import {
-  StyleSheet,
-  View,
+  Content,
+  Button,
   Text,
-} from 'react-native'
+} from 'native-base'
 
 export default (props) => (
-  <View style={styles.container}>
-    <Text
+  <Content>
+    <Button
       onPress={
         () => props.navigator.push('about')
       }
-    >Work!</Text>
-  </View>
+    >
+      <Text>Work!</Text>
+    </Button>
+  </Content>
 )
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
