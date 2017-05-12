@@ -7,11 +7,7 @@ import {
 
 export default (props) => (
   <View style={styles.container}>
-    <Text
-      onPress={
-        () => props.navigator.push('home')
-      }
-    >About!</Text>
+    <Text>About!</Text>
   </View>
 )
 
