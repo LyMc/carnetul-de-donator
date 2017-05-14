@@ -4,8 +4,10 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 // import { Ionicons } from '@expo/vector-icons'
-import * as firebase from 'firebase'
 import cacheAssetsAsync from './cacheAssetsAsync'
+import { Platform, StatusBar, View } from 'react-native'
+import getTheme from '../native-base-theme/components'
+import { StyleProvider } from 'native-base'
 
 import App from '../containers/App'
 import reducer from './reducers'
@@ -17,15 +19,6 @@ const store = createStore(
 )
 sagaMiddleware.run(saga)
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBjz0G96H--tZFTFvfhgdgq3Y4soA5wtQ0",
-  authDomain: "carnetul-de-donator.firebaseapp.com",
-  databaseURL: "https://carnetul-de-donator.firebaseio.com",
-  projectId: "carnetul-de-donator",
-  storageBucket: "carnetul-de-donator.appspot.com",
-  messagingSenderId: "694971768256"
-}
-
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
@@ -33,7 +26,6 @@ class AppContainer extends React.Component {
 
   componentWillMount() {
     this._loadAssetsAsync()
-    firebase.initializeApp(firebaseConfig)
   }
 
   async _loadAssetsAsync() {
@@ -59,7 +51,15 @@ class AppContainer extends React.Component {
 
   render() {
     if (this.state.appIsReady) {
-      return <Provider store={store}><App /></Provider>
+      return <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === 'android' && <View style={{ height: 24, backgroundColor: 'rgba(0,0,0,0.5)' }} />}
+          <StyleProvider style={getTheme()}>
+            <App />
+          </StyleProvider>
+        </View>
+      </Provider>
     } else {
       return <Expo.AppLoading />
     }

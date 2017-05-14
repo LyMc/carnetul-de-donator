@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { userData } from '../app/selectors'
-import Home from '../components/Home'
+import Profile from '../components/Profile'
 
 const mapStateToProps = createStructuredSelector({
   userData,
 })
-
 const mapDispatchToProps = dispatch => ({
-  dispatch: () => dispatch({type: 'DISPATCH'}),
+  doLogout: () => dispatch({type: 'DO_LOGOUT'}),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
