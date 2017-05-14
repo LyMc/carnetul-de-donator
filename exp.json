@@ -1,21 +1,29 @@
 {
-  "name": "carnetul-de-donator",
-  "description": "An empty new project",
+  "name": "Carnetul donatorului de sange",
+  "description": "Carnetul donatorului de sange",
   "slug": "carnetul-de-donator",
   "privacy": "public",
   "sdkVersion": "16.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
-  "primaryColor": "#cccccc",
+  "primaryColor": "#d32f2f",
   "icon": "./assets/icons/app.png",
   "loading": {
     "icon": "./assets/icons/loading.png",
-    "hideExponentText": false
+    "hideExponentText": true
+  },
+  "notification": {
+    "icon": "./assets/icons/app.png",
+    "color": "#d32f2f"
   },
   "packagerOpts": {
-    "assetExts": ["ttf", "mp4"]
+    "assetExts": ["ttf"]
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": true,
+    "bundleIdentifier": "ro.locoman.carnet"
+  },
+  "android": {
+    "package": "ro.locoman.carnet"
   }
 }
