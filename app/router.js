@@ -6,7 +6,7 @@ import LoginScreen from '../containers/LoginScreen'
 import RegisterScreen from '../containers/RegisterScreen'
 import HomeScreen from '../containers/HomeScreen'
 import NotificationsScreen from '../containers/NotificationsScreen'
-import SheduleScreen from '../containers/SheduleScreen'
+import ScheduleScreen from '../containers/ScheduleScreen'
 import LocationsScreen from '../containers/LocationsScreen'
 import ProfileScreen from '../containers/ProfileScreen'
 import HistoryScreen from '../containers/HistoryScreen'
@@ -23,7 +23,7 @@ const routerSettings = (screen, label, iconName) => ({
 export const MainRouter = DrawerNavigator({
   Home: routerSettings(HomeScreen, 'Acasă', 'md-home'),
   Notifications: routerSettings(NotificationsScreen, 'Notificări', 'md-notifications'),
-  Shedule: routerSettings(SheduleScreen, 'Programează-mă', 'md-calendar'),
+  Schedule: routerSettings(ScheduleScreen, 'Programează-mă', 'md-calendar'),
   Locations: routerSettings(LocationsScreen, 'Locații', 'md-map'),
   Profile: routerSettings(ProfileScreen, 'Contul meu', 'md-person'),
   History: routerSettings(HistoryScreen, 'Istoric', 'md-list'),

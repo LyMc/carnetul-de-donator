@@ -1,6 +1,6 @@
 import { call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
-import { firebaseAuth } from '../app/firebase'
-import { loginData, registerData } from '../app/selectors'
+import { firebaseAuth, firebaseDb } from '../app/firebase'
+import { loginData, registerData, userData } from '../app/selectors'
 
 function* doLogin() {
   const login = yield select(loginData)
@@ -18,7 +18,7 @@ function* doLogout() {
   }
 }
 function* signUp() {
-  const register = yield select(registerData)
+  const user = yield select(userData)
   try {
     yield call([firebaseAuth, firebaseAuth.createUserWithEmailAndPassword], register.email, register.password)
     try {
@@ -30,9 +30,18 @@ function* signUp() {
     console.log('error', error)
   }
 }
+function* fetchHistory() {
+  const register = yield select(registerData)
+  try {
+    yield call([firebaseDb, firebaseDb.ref('screens/').once], 'value', (snapshot) => console.log(123))
+  } catch (error) {
+    console.log('error', error)
+  }
+}
 
 export default function* rootSaga() {
   yield takeLatest('DO_LOGIN', doLogin)
   yield takeLatest('DO_LOGOUT', doLogout)
   yield takeLatest('SIGN_UP', signUp)
+  yield takeLatest('FETCH_USER_HISTORY', fetchHistory)
 }

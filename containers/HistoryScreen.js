@@ -10,6 +10,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   dispatch: () => dispatch({type: 'DISPATCH'}),
+  fetchUserHistory: () => dispatch({type: 'FETCH_USER_HISTORY'}),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(History)
