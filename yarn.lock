@@ -1725,6 +1725,12 @@ find-up@^1.0.0:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
+firebase-saga@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/firebase-saga/-/firebase-saga-1.1.2.tgz#6cc8abb8ee2958ce16a6eb2f55713e6ec34956ff"
+  dependencies:
+    redux-saga "^0.11.0"
+
 firebase@^3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.9.0.tgz#c4237f50f58eeb25081b1839d6cbf175f8f7ed9b"
@@ -3285,6 +3291,16 @@ readline2@^1.0.1:
 rebound@^0.0.13:
   version "0.0.13"
   resolved "https://registry.yarnpkg.com/rebound/-/rebound-0.0.13.tgz#4a225254caf7da756797b19c5817bf7a7941fac1"
+
+redux-saga-firebase@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/redux-saga-firebase/-/redux-saga-firebase-0.0.8.tgz#cfc3317115b1726016123f0cb5c9dcc2006b4467"
+  dependencies:
+    redux-saga "^0.15.3"
+
+redux-saga@^0.11.0:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.11.1.tgz#dc2023d059af0b91c0b1b4febce21194b67d5a58"
 
 redux-saga@^0.15.3:
   version "0.15.3"

@@ -54,9 +54,9 @@ class AppContainer extends React.Component {
       return <Provider store={store}>
         <View style={{ flex: 1, backgroundColor: '#eee' }}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={{ height: 24, backgroundColor: 'rgba(0,0,0,0.5)' }} />}
+          {Platform.OS === 'android' && <View style={{ height: 24, backgroundColor: '#d32f2f' }} />}
           <StyleProvider style={getTheme()}>
-            <App/>
+            <App />
           </StyleProvider>
         </View>
       </Provider>

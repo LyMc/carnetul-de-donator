@@ -1,6 +1,8 @@
 import React from 'react'
-import { DrawerNavigator, StackNavigator } from 'react-navigation'
-import { Icon } from 'native-base'
+import { DrawerNavigator, StackNavigator, DrawerItems } from 'react-navigation'
+import { Icon, View, Text } from 'native-base'
+import { Image } from 'react-native'
+import LogoSecondaryBig from '../assets/images/logo-secondary-big.jpg'
 
 import LoginScreen from '../containers/LoginScreen'
 import RegisterScreen from '../containers/RegisterScreen'
@@ -29,6 +31,11 @@ export const MainRouter = DrawerNavigator({
   History: routerSettings(HistoryScreen, 'Istoric', 'md-list'),
 }, {
   initialRouteName: 'Home',
+  drawerWidth: 320,
+  contentComponent: props => <View><Image source={ LogoSecondaryBig } style={{ width: 320, height: 180 }} /><DrawerItems {...props} /></View>,
+  contentOptions: {
+    activeTintColor: '#0a71b2',
+  }
 })
 
 export const AuthRouter = StackNavigator({

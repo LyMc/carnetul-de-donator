@@ -8,14 +8,15 @@ const defaultState = fromJS({
     uid: '',
   },
   login: {
-    email: '',
-    password: '',
+    email: 'victor@locoman.ro',
+    password: '123456',
   },
   register: {
-    name: '',
-    email: '',
-    password: '',
+    name: 'Victor Locoman',
+    email: 'victor@locoman.ro',
+    password: '123456',
   },
+  history: [],
 })
 
 export default (state = defaultState, action) => {
@@ -32,6 +33,12 @@ export default (state = defaultState, action) => {
       return state.setIn(['register', action.payload.field], action.payload.value)
     case 'RESET_REGISTER_DATA':
       return state.set('register', defaultState.get('register'))
+    case 'HISTORY/SAVE':
+      return state.set('history', fromJS(action.payload))
+    case 'HISTORY/ADD':
+      return state.update('history', history => history.push(action.payload))
+    case 'HISTORY/RESET':
+      return state.set('history', defaultState.get('history'))
     default:
       return state
   }

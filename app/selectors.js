@@ -1,16 +1,13 @@
 import { createSelector } from 'reselect'
 
-const selectUser = state => state.get('user')
-const selectLogin = state => state.get('login')
-const selectRegister = state => state.get('register')
-
 /*// example
-const selectData = state => state.get('data')
-export const getUserWithData = createSelector(
-  [selectUser, selectData],
-  (user, data) => user.filter(k => k === data)
-)*/
+ const selectData = state => state.get('data')
+ export const getUserWithData = createSelector(
+ [selectUser, selectData],
+ (user, data) => user.filter(k => k === data)
+ )*/
 
+const selectUser = state => state.get('user')
 export const userData = createSelector(
   selectUser,
   data => ({
@@ -20,6 +17,12 @@ export const userData = createSelector(
     uid: data.get('uid'),
   })
 )
+export const isUserSignedIn = createSelector(
+  userData,
+  data => data.signed
+)
+
+const selectLogin = state => state.get('login')
 export const loginData = createSelector(
   selectLogin,
   data => ({
@@ -27,6 +30,8 @@ export const loginData = createSelector(
     password: data.get('password'),
   })
 )
+
+const selectRegister = state => state.get('register')
 export const registerData = createSelector(
   selectRegister,
   data => ({
@@ -36,3 +41,16 @@ export const registerData = createSelector(
   })
 )
 
+const selectHistory = state => state.get('history')
+export const historyData = createSelector(
+  selectHistory,
+  data => data.filter(item => item.get('date') < new Date().getTime()).toJS()
+)
+export const currentData = createSelector(
+  selectHistory,
+  data => data.filter(item => item.get('date') > new Date().getTime()).toJS()
+)
+export const lastVisit = createSelector(
+  selectHistory,
+  data => data.first() && data.first().toObject() || false
+)
