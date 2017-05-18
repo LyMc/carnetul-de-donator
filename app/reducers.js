@@ -17,6 +17,7 @@ const defaultState = fromJS({
     password: '123456',
   },
   history: {},
+  notifications: {},
 })
 
 export default (state = defaultState, action) => {
@@ -39,6 +40,12 @@ export default (state = defaultState, action) => {
       return state.updateIn(['history', action.year], history => history.push(action.payload))
     case 'HISTORY/RESET':
       return state.set('history', defaultState.get('history'))
+    case 'NOTIFICATIONS/SAVE':
+      return state.set('notifications', fromJS(action.payload))
+    case 'NOTIFICATIONS/REMOVE':
+      return state.deleteIn(['notifications', action.payload])
+    case 'NOTIFICATIONS/RESET':
+      return state.set('notifications', defaultState.get('notifications'))
     default:
       return state
   }
