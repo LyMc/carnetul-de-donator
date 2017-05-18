@@ -44,13 +44,15 @@ export const registerData = createSelector(
 const selectHistory = state => state.get('history')
 export const historyData = createSelector(
   selectHistory,
-  data => data.filter(item => item.get('date') < new Date().getTime()).toJS()
+  data => data.reverse()
 )
-export const currentData = createSelector(
-  selectHistory,
-  data => data.filter(item => item.get('date') > new Date().getTime()).toJS()
-)
+
 export const lastVisit = createSelector(
   selectHistory,
-  data => data.first() && data.first().toObject() || false
+  data => data.size > 0
+    && data.last()
+    && data.last().last()
+    && data.last().last().get('date') > (new Date().getTime() / 1000)
+    && data.last().last().toObject()
+    || false
 )

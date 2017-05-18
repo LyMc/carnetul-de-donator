@@ -16,7 +16,7 @@ const defaultState = fromJS({
     email: 'victor@locoman.ro',
     password: '123456',
   },
-  history: [],
+  history: {},
 })
 
 export default (state = defaultState, action) => {
@@ -36,7 +36,7 @@ export default (state = defaultState, action) => {
     case 'HISTORY/SAVE':
       return state.set('history', fromJS(action.payload))
     case 'HISTORY/ADD':
-      return state.update('history', history => history.push(action.payload))
+      return state.updateIn(['history', action.year], history => history.push(action.payload))
     case 'HISTORY/RESET':
       return state.set('history', defaultState.get('history'))
     default:

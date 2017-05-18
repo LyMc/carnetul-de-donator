@@ -44,11 +44,7 @@ function* fetchUserData() {
     const data = yield call(firebaseSaga.get, '/screens/' + user.uid)
     if (data) {
       if (data.history) {
-        const history = Object.entries(data.history).map(([key, val]) => {
-          val.key = key
-          return val
-        })
-        yield put({type: 'HISTORY/SAVE', payload: history})
+        yield put({type: 'HISTORY/SAVE', payload: data.history})
       }
     }
   } catch (error) {

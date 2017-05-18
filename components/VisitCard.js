@@ -21,10 +21,10 @@ export default ({ item }) =>
         }}>
           <Text style={{
             fontSize: 20, color: '#fff', textAlign: 'center',
-          }}>{ new Date(item.date).getDate() }</Text>
+          }}>{ new Date(item.date * 1000).getDate() }</Text>
           <Text style={{
             fontSize: 12, color: '#fff', textAlign: 'center',
-          }}>{ getMonth(new Date(item.date).getMonth()) }</Text>
+          }}>{ getMonth(new Date(item.date * 1000).getMonth()) }</Text>
         </View>
         <Body>
         <Text>{ item.title }</Text>

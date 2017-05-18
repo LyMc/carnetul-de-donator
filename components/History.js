@@ -19,40 +19,19 @@ import Header from '../components/Header'
 
 import VisitCard from '../components/VisitCard'
 
-const currentYearConst = new Date().getFullYear()
-
-export default ({ navigation, historyData, currentData }) => {
-  let lastYear = 0
+export default ({ navigation, historyData }) => {
   return (
     <Container>
       <Header navigation={navigation} title="Istoric"/>
       <Content style={{padding: 5}}>
-        { currentData && currentData.map(item => (
-          <View key={ item.key }>
-            { <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>vizite viitoare</Text> }
-            <VisitCard item={ item } />
+        { historyData && historyData.map((yearVisits, year) =>
+          <View key={ year }>
+            <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>{ year }</Text>
+            { yearVisits.reverse().map((item, key) =>
+              <VisitCard key={ key } item={ item.toObject() } />
+            ).toArray() }
           </View>
-        )) }
-        { historyData && historyData.map(item => {
-          let currentYear = new Date(item.date).getFullYear()
-          let showCurrentYear = false
-          if (lastYear !== currentYear) {
-            showCurrentYear = true
-            lastYear = currentYear
-            if (currentYearConst === currentYear) {
-              currentYear = 'vizite mai vechi'
-            }
-            if (currentYearConst === currentYear + 1) {
-              currentYear = 'acum un an'
-            }
-          }
-          return (
-            <View key={ item.key }>
-              { showCurrentYear && <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>{ currentYear }</Text> }
-              <VisitCard item={ item } />
-            </View>
-          )
-        }) }
+        ).toArray() }
         <View style={{height: 50}}/>
       </Content>
     </Container>
