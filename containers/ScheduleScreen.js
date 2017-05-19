@@ -9,7 +9,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  dispatch: () => dispatch({type: 'DISPATCH'}),
+  refresh: () => dispatch({type: 'REFRESH'}),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Schedule)

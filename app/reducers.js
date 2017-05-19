@@ -12,13 +12,19 @@ const defaultState = fromJS({
     password: '123456',
   },
   register: {
-    name: 'Victor Locoman',
-    email: 'victor@locoman.ro',
-    password: '123456',
+    name: '',
+    email: '',
+    password: '',
   },
   history: {},
   notifications: {},
   locations: {},
+  settings: {
+    birthday: '',
+    sex: '',
+    city: '',
+    location: '',
+  },
 })
 
 export default (state = defaultState, action) => {
@@ -27,6 +33,10 @@ export default (state = defaultState, action) => {
       return state.set('user', fromJS(action.payload)).setIn(['user', 'signed'], true)
     case 'SIGN_OUT':
       return state.set('user', defaultState.get('user')).setIn(['user', 'signed'], false)
+    case 'USER/CHANGE_NAME':
+      return state.setIn(['user', 'name'], action.payload)
+    case 'SETTINGS/CHANGE':
+      return state.setIn(['settings', action.payload.field], action.payload.value)
     case 'CHANGE_LOGIN_DATA':
       return state.setIn(['login', action.payload.field], action.payload.value)
     case 'RESET_LOGIN_DATA':

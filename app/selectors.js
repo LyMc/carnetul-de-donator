@@ -28,7 +28,6 @@ export const lastVisit = createSelector(selectHistory, data =>
   data.size > 0
   && data.last()
   && data.last().last()
-  && data.last().last().get('date') > (new Date().getTime() / 1000)
   && data.last().last().toObject()
   || false
 )
@@ -38,3 +37,6 @@ export const notificationsData = createSelector(selectNotifications, data => dat
 
 const selectLocations = state => state.get('locations')
 export const locationsData = createSelector(selectLocations, data => data.get('Bucharest') || data)
+
+const selectSettings = state => state.get('settings')
+export const settingsData = createSelector(selectSettings, data => data.toObject())

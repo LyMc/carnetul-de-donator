@@ -19,10 +19,10 @@ import Header from '../components/Header'
 
 import VisitCard from '../components/VisitCard'
 
-export default ({ navigation, historyData }) => {
+export default ({ navigation, historyData, refresh }) => {
   return (
     <Container>
-      <Header navigation={navigation} title="Istoric"/>
+      <Header navigation={navigation} title="Istoric" refresh={ refresh }/>
       <Content style={{padding: 5}}>
         { historyData && historyData.map((yearVisits, year) =>
           <View key={ year }>

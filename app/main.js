@@ -9,6 +9,9 @@ import { Platform, StatusBar, View } from 'react-native'
 import getTheme from '../native-base-theme/components'
 import { StyleProvider } from 'native-base'
 
+import Sentry from 'sentry-expo'
+Sentry.config('https://6c24fe0ca41249cbb7c5e2cd19ea4f9e@sentry.io/170088').install()
+
 import App from '../containers/App'
 import reducer from './reducers'
 import saga from './sagas'

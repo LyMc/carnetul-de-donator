@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: 'NOTIFICATIONS/REMOVE', payload })
     dispatch({ type: 'REMOVE_DATA', payload: { type: 'notifications', key: payload } })
   },
+  refresh: () => dispatch({type: 'REFRESH'}),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

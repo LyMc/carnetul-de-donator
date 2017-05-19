@@ -9,7 +9,7 @@ import {
   Icon,
 } from 'native-base'
 
-export default ({ navigation, title }) => (
+export default ({ navigation, title, refresh }) => (
   <Header>
     <Left>
       <Button transparent onPress={() => navigation.navigate('DrawerOpen')}>
@@ -19,6 +19,10 @@ export default ({ navigation, title }) => (
     <Body>
       <Title>{ title }</Title>
     </Body>
-    <Right />
+    <Right>
+      { refresh && <Button transparent onPress={ refresh }>
+        <Icon name="md-refresh"/>
+      </Button> }
+    </Right>
   </Header>
 )

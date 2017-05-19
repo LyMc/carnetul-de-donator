@@ -6,9 +6,9 @@ import Header from '../components/Header'
 import VisitCard from '../components/VisitCard'
 import NotificationCard from '../components/NotificationCard'
 
-export default ({ navigation, userData, lastVisit, notificationsData, removeNotification }) => (
+export default ({ navigation, userData, lastVisit, notificationsData, removeNotification, refresh }) => (
   <Container>
-    <Header navigation={navigation} title="Acasă"/>
+    <Header navigation={navigation} title="Acasă" refresh={ refresh }/>
     <Content style={{ padding: 5 }}>
       {userData.name && <Card>
         <CardItem>

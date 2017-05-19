@@ -68,6 +68,10 @@ function* removeData(data) {
     console.log('error fetch data', error)
   }
 }
+function* refresh() {
+  yield put({type: 'FETCH_APP_DATA'})
+  yield put({type: 'FETCH_USER_DATA'})
+}
 
 export default function* rootSaga() {
   yield takeLatest('DO_LOGIN', doLogin)
@@ -76,6 +80,7 @@ export default function* rootSaga() {
   yield takeLatest('SIGN_UP', signUp)
   yield takeLatest('FETCH_USER_DATA', fetchUserData)
   yield takeLatest('FETCH_APP_DATA', fetchAppData)
+  yield takeLatest('REFRESH', refresh)
   yield takeEvery('REMOVE_DATA', removeData)
   yield put({type: 'SYNC_USER'})
   yield put({type: 'FETCH_APP_DATA'})
