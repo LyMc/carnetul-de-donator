@@ -18,6 +18,7 @@ const defaultState = fromJS({
   },
   history: {},
   notifications: {},
+  locations: {},
 })
 
 export default (state = defaultState, action) => {
@@ -46,6 +47,8 @@ export default (state = defaultState, action) => {
       return state.deleteIn(['notifications', action.payload])
     case 'NOTIFICATIONS/RESET':
       return state.set('notifications', defaultState.get('notifications'))
+    case 'LOCATIONS/SAVE':
+      return state.set('locations', fromJS(action.payload))
     default:
       return state
   }

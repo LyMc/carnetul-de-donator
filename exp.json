@@ -4,7 +4,7 @@
   "slug": "carnetul-de-donator",
   "privacy": "public",
   "sdkVersion": "16.0.0",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "orientation": "portrait",
   "primaryColor": "#d32f2f",
   "icon": "./assets/icons/app.png",
@@ -24,6 +24,11 @@
     "bundleIdentifier": "ro.locoman.carnet"
   },
   "android": {
-    "package": "ro.locoman.carnet"
+    "package": "ro.locoman.carnet",
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyBJWJg9Z9ZQHoyX2ZVUksWHJGia_J9To2I"
+      }
+    }
   }
 }

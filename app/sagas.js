@@ -41,7 +41,7 @@ function* signUp() {
 function* fetchUserData() {
   const user = yield select(userData)
   try {
-    const data = yield call(firebaseSaga.get, '/screens/' + user.uid)
+    const data = yield call(firebaseSaga.get, '/user/' + user.uid)
     if (data) {
       yield put({type: 'HISTORY/SAVE', payload: data.history || {}})
       yield put({type: 'NOTIFICATIONS/SAVE', payload: data.notifications || {}})
@@ -50,10 +50,20 @@ function* fetchUserData() {
     console.log('error fetch data', error)
   }
 }
+function* fetchAppData() {
+  try {
+    const data = yield call(firebaseSaga.get, '/app')
+    if (data) {
+      yield put({type: 'LOCATIONS/SAVE', payload: data.locations || {}})
+    }
+  } catch (error) {
+    console.log('error fetch data', error)
+  }
+}
 function* removeData(data) {
   const user = yield select(userData)
   try {
-    yield call(firebaseSaga.delete, '/screens/' + user.uid + '/' + data.type + '/' + data.key)
+    yield call(firebaseSaga.delete, '/user/' + user.uid + '/' + data.payload.type + '/' + data.payload.key)
   } catch (error) {
     console.log('error fetch data', error)
   }
@@ -65,6 +75,8 @@ export default function* rootSaga() {
   yield takeLatest('DO_LOGOUT', doLogout)
   yield takeLatest('SIGN_UP', signUp)
   yield takeLatest('FETCH_USER_DATA', fetchUserData)
+  yield takeLatest('FETCH_APP_DATA', fetchAppData)
   yield takeEvery('REMOVE_DATA', removeData)
   yield put({type: 'SYNC_USER'})
+  yield put({type: 'FETCH_APP_DATA'})
 }

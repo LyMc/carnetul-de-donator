@@ -1,24 +1,14 @@
 import React from 'react'
-import {
-  Container,
-  Content,
-  Button,
-  Text,
-  Form,
-  Item,
-  Input,
-  Icon,
-} from 'native-base'
+import { Container, Content, View } from 'native-base'
 import Header from '../components/Header'
+import LocationCard from '../components/LocationCard'
 
-export default ({
-  navigation,
-  userData,
-}) => (
+export default ({ navigation, locationsData }) => (
   <Container>
-    <Header navigation={navigation} title="Locații" />
-    <Content>
-      <Text>O listă cu locațiile centrelor de donații din apropiere (bucurești)</Text>
+    <Header navigation={navigation} title="Locații"/>
+    <Content style={{ padding: 5 }}>
+      { locationsData.map((item, key) => <LocationCard key={ key } navigation={ navigation } item={ item.toJS() }/>).toArray() }
+      <View style={{ height: 50 }}/>
     </Content>
   </Container>
 )

@@ -1,12 +1,5 @@
 import {createSelector} from 'reselect'
 
-/*// example
- const selectData = state => state.get('data')
- export const getUserWithData = createSelector(
- [selectUser, selectData],
- (user, data) => user.filter(k => k === data)
- )*/
-
 const selectUser = state => state.get('user')
 export const userData = createSelector(selectUser, data => ({
   signed: data.get('signed'),
@@ -42,3 +35,6 @@ export const lastVisit = createSelector(selectHistory, data =>
 
 const selectNotifications = state => state.get('notifications')
 export const notificationsData = createSelector(selectNotifications, data => data)
+
+const selectLocations = state => state.get('locations')
+export const locationsData = createSelector(selectLocations, data => data.get('Bucharest') || data)

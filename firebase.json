@@ -1,0 +1,62 @@
+{
+  "app": {
+    "locations": {
+      "Bucharest": {
+        "-key123": {
+          "address": "Strada Doctor Constantin Caracaș 2",
+          "addressLink": "https://www.google.com/maps/place/Centrul+de+transfuzie+sanguină+București/",
+          "initialRegion": {
+            "latitude": 44.453865,
+            "latitudeDelta": 0.006,
+            "longitude": 26.079689,
+            "longitudeDelta": 0.003
+          },
+          "link": "http://www.ctsbucuresti.ro",
+          "name": "Centrul de transfuzie sanguină București",
+          "phone": "031 405 3660",
+          "program": "Deschis: 07:30 - 13:30"
+        }
+      }
+    }
+  },
+  "user": {
+    "vmuQDofURcYnO5pR68qD3UeQANr1": {
+      "history": {
+        "2016": {
+          "-key122": {
+            "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet fugiat harum modi molestias nulla odit omnis saepe sequi. Aliquam dolore et excepturi exercitationem quis. Commodi doloribus libero mollitia quaerat! Impedit?",
+            "date": 1400000000,
+            "location": "asjfioah oi",
+            "title": "oskjfigoh oisadhf iosdhnfiog js"
+          }
+        },
+        "2017": {
+          "-key123": {
+            "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet fugiat harum modi molestias nulla odit omnis saepe sequi. Aliquam dolore et excepturi exercitationem quis. Commodi doloribus libero mollitia quaerat! Impedit?",
+            "date": 1500000000,
+            "location": 3,
+            "title": 1
+          },
+          "-key124": {
+            "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet fugiat harum modi molestias nulla odit omnis saepe sequi. Aliquam dolore et excepturi exercitationem quis. Commodi doloribus libero mollitia quaerat! Impedit?",
+            "date": 1510000000,
+            "location": 4,
+            "title": 5
+          }
+        }
+      },
+      "notifications": {
+        "-key001": {
+          "content": "Lorem ipsum dolor asmet...",
+          "description": "Lorem ipsum...",
+          "title": "necesitate donație",
+          "type": 1
+        },
+        "-key004": {
+          "title": "Ok",
+          "type": 2
+        }
+      }
+    }
+  }
+}
