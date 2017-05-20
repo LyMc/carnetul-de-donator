@@ -10,6 +10,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   refresh: () => dispatch({type: 'REFRESH'}),
+  changeLocation: (value) => dispatch({type: 'SETTINGS/CHANGE', payload: {field: 'location', value}}),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locations)

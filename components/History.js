@@ -19,7 +19,7 @@ import Header from '../components/Header'
 
 import VisitCard from '../components/VisitCard'
 
-export default ({ navigation, historyData, refresh }) => {
+export default ({ navigation, historyData, locationsData, refresh }) => {
   return (
     <Container>
       <Header navigation={navigation} title="Istoric" refresh={ refresh }/>
@@ -28,7 +28,7 @@ export default ({ navigation, historyData, refresh }) => {
           <View key={ year }>
             <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>{ year }</Text>
             { yearVisits.reverse().map((item, key) =>
-              <VisitCard key={ key } item={ item.toObject() } />
+              <VisitCard key={ key } item={ item.toObject() } locations={ locationsData } />
             ).toArray() }
           </View>
         ).toArray() }

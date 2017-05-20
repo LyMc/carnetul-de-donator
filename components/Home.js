@@ -6,7 +6,7 @@ import Header from '../components/Header'
 import VisitCard from '../components/VisitCard'
 import NotificationCard from '../components/NotificationCard'
 
-export default ({ navigation, userData, lastVisit, notificationsData, removeNotification, refresh }) => (
+export default ({ navigation, userData, lastVisit, notificationsData, locationsData, removeNotification, refresh }) => (
   <Container>
     <Header navigation={navigation} title="Acasă" refresh={ refresh }/>
     <Content style={{ padding: 5 }}>
@@ -26,7 +26,7 @@ export default ({ navigation, userData, lastVisit, notificationsData, removeNoti
         margin: 5,
         color: '#aaa',
       }}>{ lastVisit.date * 1000 > new Date().getTime() ? 'următoarea vizită' : 'ultima vizită'}</Text> }
-      { lastVisit && <VisitCard item={ lastVisit }/>}
+      { lastVisit && <VisitCard item={ lastVisit } locations={ locationsData } />}
       <View style={{ height: 50 }}/>
     </Content>
   </Container>

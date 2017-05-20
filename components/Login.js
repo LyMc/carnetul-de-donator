@@ -29,7 +29,7 @@ const Login = ({
     >
       <Item>
         <Icon name="md-at" />
-        <Input placeholder="E-mail" value={loginData.email}
+        <Input keyboardType="email-address" placeholder="E-mail" value={loginData.email}
           onChangeText={value => changeLoginData('email', value)}
         />
       </Item>

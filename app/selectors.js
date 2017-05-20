@@ -39,4 +39,4 @@ const selectLocations = state => state.get('locations')
 export const locationsData = createSelector(selectLocations, data => data.get('Bucharest') || data)
 
 const selectSettings = state => state.get('settings')
-export const settingsData = createSelector(selectSettings, data => data.toObject())
+export const settingsData = createSelector(selectSettings, data => data.toJS())

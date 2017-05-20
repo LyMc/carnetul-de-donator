@@ -11,7 +11,7 @@ import {
 import appLogo from '../assets/icons/app.png'
 import { getMonth } from '../app/utils'
 
-export default ({ item }) =>
+export default ({ item, locations }) =>
   <Card>
     <CardItem>
       <Left>
@@ -28,11 +28,11 @@ export default ({ item }) =>
         </View>
         <Body>
         <Text>{ item.title }</Text>
-        <Text note>{ item.location }</Text>
+        <Text note>{ locations.getIn([item.location, 'name']) }</Text>
         </Body>
       </Left>
     </CardItem>
-    <CardItem>
+    { item.content && <CardItem>
       <Text>{ item.content }</Text>
-    </CardItem>
+    </CardItem> }
   </Card>

@@ -35,7 +35,7 @@ const Register = ({
       </Item>
       <Item>
         <Icon name="md-at" />
-        <Input placeholder="E-mail"  value={registerData.email}
+        <Input keyboardType="email-address" placeholder="E-mail"  value={registerData.email}
           onChangeText={value => changeRegisterData('email', value)}
         />
       </Item>

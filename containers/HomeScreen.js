@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { userData, lastVisit, notificationsData } from '../app/selectors'
+import { userData, lastVisit, notificationsData, locationsData } from '../app/selectors'
 import Home from '../components/Home'
 
 const mapStateToProps = createStructuredSelector({
-  userData, lastVisit, notificationsData
+  userData, lastVisit, notificationsData, locationsData
 })
 
 const mapDispatchToProps = dispatch => ({

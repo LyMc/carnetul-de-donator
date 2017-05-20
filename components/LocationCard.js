@@ -12,7 +12,7 @@ export default class LocationCard extends React.Component {
   }
 
   render() {
-    const { item, navigation } = this.props
+    const { item, set } = this.props
     return (
       <Card>
         <CardItem header style={{ backgroundColor: '#0a71b2' }}>
@@ -38,7 +38,7 @@ export default class LocationCard extends React.Component {
           <Icon name="md-globe" info/>
           <Text>{ item.link }</Text>
         </CardItem>
-        <CardItem cardBody>
+        { item.initialRegion && <CardItem cardBody>
           <MapView
             liteMode
             style={{ height: 200, width: '100%' }}
@@ -49,10 +49,10 @@ export default class LocationCard extends React.Component {
               coordinate={ item.initialRegion }
             />
           </MapView>
-        </CardItem>
+        </CardItem> }
         <CardItem>
           <Left>
-            <Button info onPress={ () => navigation.navigate('Schedule') }>
+            <Button info onPress={ set }>
               <Text>Programează-mă</Text>
             </Button>
           </Left>

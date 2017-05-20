@@ -4,7 +4,7 @@
   "slug": "carnetul-de-donator",
   "privacy": "public",
   "sdkVersion": "17.0.0",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "orientation": "portrait",
   "primaryColor": "#d32f2f",
   "icon": "./assets/icons/app.png",
@@ -30,17 +30,5 @@
         "apiKey": "AIzaSyBJWJg9Z9ZQHoyX2ZVUksWHJGia_J9To2I"
       }
     }
-  },
-  "hooks": {
-    "postPublish": [
-      {
-        "file": "sentry-expo/upload-sourcemaps",
-        "config": {
-          "organization": "victor-locoman",
-          "project": "carnetul-de-donator",
-          "authToken": "ab299502f42b4aa6b45bc923e46ec6766a6a869eaad941d4bf1ffdc17ffb9fd5"
-        }
-      }
-    ]
   }
 }

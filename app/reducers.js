@@ -8,8 +8,8 @@ const defaultState = fromJS({
     uid: '',
   },
   login: {
-    email: 'victor@locoman.ro',
-    password: '123456',
+    email: '',
+    password: '',
   },
   register: {
     name: '',
@@ -20,10 +20,15 @@ const defaultState = fromJS({
   notifications: {},
   locations: {},
   settings: {
-    birthday: '',
-    sex: '',
+    updated: false,
+    birthday: {},
+    sex: 0,
     city: '',
     location: '',
+    weight: '',
+    blood: 0,
+    rh: '',
+    needDonation: false,
   },
 })
 
@@ -34,9 +39,11 @@ export default (state = defaultState, action) => {
     case 'SIGN_OUT':
       return state.set('user', defaultState.get('user')).setIn(['user', 'signed'], false)
     case 'USER/CHANGE_NAME':
-      return state.setIn(['user', 'name'], action.payload)
+      return state.setIn(['user', 'name'], action.payload).setIn(['settings', 'updated'], true)
     case 'SETTINGS/CHANGE':
-      return state.setIn(['settings', action.payload.field], action.payload.value)
+      return state.setIn(['settings', action.payload.field], fromJS(action.payload.value)).setIn(['settings', 'updated'], true)
+    case 'SETTINGS/UPDATED':
+      return state.setIn(['settings', 'updated'], false)
     case 'CHANGE_LOGIN_DATA':
       return state.setIn(['login', action.payload.field], action.payload.value)
     case 'RESET_LOGIN_DATA':
@@ -57,6 +64,10 @@ export default (state = defaultState, action) => {
       return state.deleteIn(['notifications', action.payload])
     case 'NOTIFICATIONS/RESET':
       return state.set('notifications', defaultState.get('notifications'))
+    case 'SETTINGS/SAVE':
+      return state.set('settings', fromJS(action.payload))
+    case 'SETTINGS/RESET':
+      return state.set('settings', defaultState.get('settings'))
     case 'LOCATIONS/SAVE':
       return state.set('locations', fromJS(action.payload))
     default:
