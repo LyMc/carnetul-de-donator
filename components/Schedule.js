@@ -45,6 +45,9 @@ export default class Profile extends React.Component {
     const year = new Date().getFullYear() === date.year ? '' : ' ' + date.year
     return Object.keys(date).length ? date.day + ' ' + getMonth(date.month) + year : ''
   }
+  renderTime(time) {
+    return time.hour >= 0 ? ('0' + time.hour).slice(-2) + ':' + ('0' + time.minute).slice(-2) : ''
+  }
   render() {
     const { navigation, settingsData, locationsData, changeSettings, refresh, save } = this.props
     return (
@@ -71,7 +74,7 @@ export default class Profile extends React.Component {
             </Item>
             <Item stackedLabel button onPress={ this.showTimePicker.bind(this) }>
               <Label style={{ paddingLeft: 7 }}>Ora</Label>
-              <Input disabled value={ this.state.time.hour ? this.state.time.hour + ':' + this.state.time.minute : '' } style={{ paddingLeft: 12 }}/>
+              <Input disabled value={ this.renderTime(this.state.time) } style={{ paddingLeft: 12 }}/>
             </Item>
           </Form>
           <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 22 }}>

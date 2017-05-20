@@ -33,7 +33,7 @@ export default class Profile extends React.Component {
           <Form>
             <Item stackedLabel>
               <Label style={{ paddingLeft: 7 }}>Nume Prenume</Label>
-              <Input value={ userData.name } style={{ paddingLeft: 12 }} onChangeText={ changeName } ref='name' onFocus={() => this.refs.kh.inputFocused(this, 'name')}/>
+              <Input disabled value={ userData.name } style={{ paddingLeft: 12 }} onChangeText={ changeName } ref='name' onFocus={() => this.refs.kh.inputFocused(this, 'name')}/>
             </Item>
             <Item stackedLabel>
               <Label style={{ paddingLeft: 7 }}>E-mail</Label>
@@ -110,8 +110,8 @@ export default class Profile extends React.Component {
             </Item>
           </Form>
           <ListItem button onPress={ () => changeSettings('needDonation', !settingsData.needDonation) }>
-            <Switch value={ settingsData.needDonation } onValueChange={ () => changeSettings('needDonation', !settingsData.needDonation) } thumbTintColor="#0a71b2" onTintColor="#579fe4"/>
-            <Text>Doresc să fiu anunțat când e nevoie de donatori</Text>
+            <Switch value={ settingsData.needDonation } onValueChange={ () => changeSettings('needDonation', !settingsData.needDonation) } />
+            <Text>{ settingsData.needDonation ? 'Doresc' : 'Nu doresc' } să fiu anunțat când e nevoie de donatori</Text>
           </ListItem>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 22 }}>
             <Button info onPress={ save } disabled={ !settingsData.updated }>

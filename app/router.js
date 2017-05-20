@@ -30,7 +30,7 @@ export const MainRouter = DrawerNavigator({
   Profile: routerSettings(ProfileScreen, 'Contul meu', 'md-person'),
   History: routerSettings(HistoryScreen, 'Istoric', 'md-list'),
 }, {
-  initialRouteName: 'Schedule',
+  initialRouteName: 'Home',
   drawerWidth: 320,
   contentComponent: props => <View><Image source={ LogoSecondaryBig } style={{ width: 320, height: 180 }} /><DrawerItems {...props} /></View>,
   contentOptions: {

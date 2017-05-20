@@ -24,6 +24,7 @@ function* syncUser() {
     if (user) {
       yield put({ type: 'SIGN_IN', payload: { name: user.displayName, email: user.email, uid: user.uid } })
       yield put({ type: 'FETCH_USER_DATA' })
+      yield put({ type: 'FETCH_APP_DATA' })
     } else {
       yield put({ type: 'SIGN_OUT' })
     }

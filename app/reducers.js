@@ -37,7 +37,7 @@ export default (state = defaultState, action) => {
     case 'SIGN_IN':
       return state.set('user', fromJS(action.payload)).setIn(['user', 'signed'], true)
     case 'SIGN_OUT':
-      return state.set('user', defaultState.get('user')).setIn(['user', 'signed'], false)
+      return defaultState.setIn(['user', 'signed'], false)
     case 'USER/CHANGE_NAME':
       return state.setIn(['user', 'name'], action.payload).setIn(['settings', 'updated'], true)
     case 'SETTINGS/CHANGE':
