@@ -1,7 +1,6 @@
 import React from 'react'
-import { Container, Content, Button, Text, Form, Item, Input, Icon, Card, CardItem, Body, Thumbnail, Left, Right, View } from 'native-base'
+import { Container, Content, Text, Card, CardItem, View } from 'native-base'
 
-import appLogo from '../assets/icons/app.png'
 import Header from '../components/Header'
 import VisitCard from '../components/VisitCard'
 import NotificationCard from '../components/NotificationCard'
@@ -26,7 +25,7 @@ export default ({ navigation, userData, lastVisit, notificationsData, locationsD
         margin: 5,
         color: '#aaa',
       }}>{ lastVisit.date * 1000 > new Date().getTime() ? 'următoarea vizită' : 'ultima vizită'}</Text> }
-      { lastVisit && <VisitCard item={ lastVisit } locations={ locationsData } />}
+      { lastVisit && <VisitCard item={ lastVisit } locations={ lastVisit.city ? locationsData.get(lastVisit.city) : locationsData } />}
       <View style={{ height: 50 }}/>
     </Content>
   </Container>

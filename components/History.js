@@ -24,11 +24,11 @@ export default ({ navigation, historyData, locationsData, refresh }) => {
     <Container>
       <Header navigation={navigation} title="Istoric" refresh={ refresh }/>
       <Content style={{padding: 5}}>
-        { historyData && historyData.map((yearVisits, year) =>
+        { historyData.map((yearVisits, year) =>
           <View key={ year }>
             <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>{ year }</Text>
             { yearVisits.reverse().map((item, key) =>
-              <VisitCard key={ key } item={ item.toObject() } locations={ locationsData } />
+              <VisitCard key={ key } item={ item.toObject() } locations={ item.get('city') ? locationsData.get(item.get('city')) : locationsData } />
             ).toArray() }
           </View>
         ).toArray() }

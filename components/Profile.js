@@ -9,7 +9,7 @@ export default class Profile extends React.Component {
   showPicker = async () => {
     try {
       const b = this.props.settingsData.birthday
-      const date = b.day && b.year && b.month && (new Date(b.year, b.month, b.day)) || (new Date())
+      const date = b && b.day && b.year && b.month && (new Date(b.year, b.month, b.day)) || (new Date())
       const maxDate = new Date()
       const { action, year, month, day } = await DatePickerAndroid.open({ mode: 'spinner', date, maxDate })
       if (action !== DatePickerAndroid.dismissedAction) {
@@ -21,7 +21,7 @@ export default class Profile extends React.Component {
   }
 
   renderBirthday(birthday) {
-    return Object.keys(birthday).length ? birthday.day + ' ' + getMonth(birthday.month) + ' ' + birthday.year : ''
+    return birthday && Object.keys(birthday).length ? birthday.day + ' ' + getMonth(birthday.month) + ' ' + birthday.year : ''
   }
 
   render() {
@@ -60,7 +60,16 @@ export default class Profile extends React.Component {
             </Item>
             <Item stackedLabel>
               <Label style={{ paddingLeft: 7 }}>Oraș</Label>
-              <Input value={ settingsData.city } style={{ paddingLeft: 12 }} onChangeText={(value) => changeSettings('city', value)} ref='city' onFocus={() => this.refs.kh.inputFocused(this, 'city')}/>
+              <Picker
+                style={{ width: '100%' }}
+                supportedOrientations={[ 'portrait', 'landscape' ]}
+                iosHeader="Oraș"
+                mode="dialog"
+                selectedValue={ settingsData.city }
+                onValueChange={ (value) => changeSettings('city', value) }
+              >
+                { locationsData.map((_, city) => <Picker.Item key={ city } label={ city } value={ city } />).toArray()}
+              </Picker>
             </Item>
             <Item stackedLabel>
               <Label style={{ paddingLeft: 7 }}>Locație</Label>
@@ -72,7 +81,7 @@ export default class Profile extends React.Component {
                 selectedValue={ settingsData.location }
                 onValueChange={ (value) => changeSettings('location', value) }
               >
-                { locationsData.map((location, key) => <Picker.Item key={ key } label={location.get('name')} value={ key } />).toArray()}
+                { settingsData.city && locationsData.get(settingsData.city).map((location, key) => <Picker.Item key={ key } label={location.get('name')} value={ key } />).toArray()}
               </Picker>
             </Item>
             <Item stackedLabel>

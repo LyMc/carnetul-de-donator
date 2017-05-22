@@ -9,8 +9,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  doLogin: () => dispatch({type: 'DO_LOGIN'}),
-  changeLoginData: (field, value) => dispatch({type: 'CHANGE_LOGIN_DATA', payload: {field, value}}),
+  doLogin: () => dispatch({ type: 'DO_LOGIN' }),
+  changeLoginData: (field, value) => dispatch({ type: 'CHANGE_LOGIN_DATA', payload: { field, value } }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

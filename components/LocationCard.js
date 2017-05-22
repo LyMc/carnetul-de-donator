@@ -15,7 +15,7 @@ export default class LocationCard extends React.Component {
     const { item, set } = this.props
     return (
       <Card>
-        <CardItem header style={{ backgroundColor: '#0a71b2' }}>
+        <CardItem header style={{ backgroundColor: '#9a0007' }}>
           <Text style={{ fontWeight: '700', fontSize: 18, color: '#fff' }}>{ item.name }</Text>
         </CardItem>
         <CardItem button onPress={ () => Linking.openURL(item.addressLink) }>

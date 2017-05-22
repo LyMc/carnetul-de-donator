@@ -56,6 +56,19 @@ export default class Profile extends React.Component {
         <KeyboardHandler ref='kh' offset={ 80 }>
           <Form>
             <Item stackedLabel>
+              <Label style={{ paddingLeft: 7 }}>Oraș</Label>
+              <Picker
+                style={{ width: '100%' }}
+                supportedOrientations={[ 'portrait', 'landscape' ]}
+                iosHeader="Oraș"
+                mode="dialog"
+                selectedValue={ settingsData.city }
+                onValueChange={ (value) => changeSettings('city', value) }
+              >
+                { locationsData.map((_, city) => <Picker.Item key={ city } label={ city } value={ city } />).toArray()}
+              </Picker>
+            </Item>
+            <Item stackedLabel>
               <Label style={{ paddingLeft: 7 }}>Locație</Label>
               <Picker
                 style={{ width: '100%' }}
@@ -65,7 +78,7 @@ export default class Profile extends React.Component {
                 selectedValue={ settingsData.location }
                 onValueChange={ (value) => changeSettings('location', value) }
               >
-                { locationsData.map((location, key) => <Picker.Item key={ key } label={location.get('name')} value={ key } />).toArray()}
+                { settingsData.city && locationsData.get(settingsData.city).map((location, key) => <Picker.Item key={ key } label={location.get('name')} value={ key } />).toArray()}
               </Picker>
             </Item>
             <Item stackedLabel button onPress={ this.showDatePicker.bind(this) }>

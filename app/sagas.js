@@ -35,6 +35,7 @@ function* signUp() {
   try {
     const user = yield call(firebaseSaga.register, register.email, register.password, register.name)
     yield put({ type: 'SIGN_IN', payload: { name: user.displayName, email: user.email, uid: user.uid } })
+    yield call(firebaseSaga.update, '/user/' + user.uid + '/settings', {name: register.name, city: 'București', needDonation: true})
   } catch (error) {
     console.log('error sign up', error)
   }
@@ -46,7 +47,7 @@ function* fetchUserData() {
     if (data) {
       yield put({ type: 'HISTORY/SAVE', payload: data.history || {} })
       yield put({ type: 'NOTIFICATIONS/SAVE', payload: data.notifications || {} })
-      yield put({ type: 'SETTINGS/SAVE', payload: data.settings || {} })
+      yield put({ type: 'SETTINGS/SAVE', payload: data.settings })
     }
   } catch (error) {
     console.log('error fetch data', error)

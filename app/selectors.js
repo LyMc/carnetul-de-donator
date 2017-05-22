@@ -36,7 +36,7 @@ const selectNotifications = state => state.get('notifications')
 export const notificationsData = createSelector(selectNotifications, data => data)
 
 const selectLocations = state => state.get('locations')
-export const locationsData = createSelector(selectLocations, data => data.get('Bucharest') || data)
+export const locationsData = createSelector(selectLocations, data => data)
 
 const selectSettings = state => state.get('settings')
 export const settingsData = createSelector(selectSettings, data => data.toJS())
