@@ -55,7 +55,7 @@ function* fetchUserData() {
 }
 function* fetchAppData() {
   try {
-    const data = yield call(firebaseSaga.get, '/app')
+    const data = yield call(firebaseSaga.get, '/app_v1')
     if (data) {
       yield put({ type: 'LOCATIONS/SAVE', payload: data.locations || {} })
     }
