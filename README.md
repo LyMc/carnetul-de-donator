@@ -4,7 +4,7 @@ Aplicația poate fi instalată pe telefon folosind una din metodele:
 + (Android) Instalare directă folosind [fișierul .APK][apk]
 + (Android) Instalând [Expo][expo-android] de pe Google Play, apoi [se deschide aplicația prin Expo][expo]
 + (iOS) Instalând [Expo][expo-ios] de pe App Store, apoi [se deschide aplicația prin Expo][expo]
-+ (Android) Instalare de pe Google Play: *urmează*
++ (Android) Instalare de pe [Google Play][play-store]
 + (iOS) Instalare de pe App Store: *urmează*
 + (iOS) Instalare directă folosind fișierul .ipa *(urmează)*
 
@@ -66,6 +66,7 @@ Aplicația poate fi accesată online [aici][admin-donatori]
 [expo]: https://expo.io/@lymc/carnetul-de-donator
 [expo-android]: https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www
 [expo-ios]: https://itunes.apple.com/app/apple-store/id982107779?pt=17102800&ct=www&mt=8
+[play-store]: https://play.google.com/store/apps/details?id=ro.locoman.carnet
 
 [admin-donatori]: https://admin-donatori.locoman.ro/
 
