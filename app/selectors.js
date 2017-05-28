@@ -1,42 +1,23 @@
-import {createSelector} from 'reselect'
+import { createSelector } from 'reselect'
 
-const selectUser = state => state.get('user')
-export const userData = createSelector(selectUser, data => ({
-  signed: data.get('signed'),
-  name: data.get('name'),
-  email: data.get('email'),
-  uid: data.get('uid'),
-}))
-export const isUserSignedIn = createSelector(userData, data => data.signed)
+export const uid = state => state.get('uid')
 
-const selectLogin = state => state.get('login')
-export const loginData = createSelector(selectLogin, data => ({
-  email: data.get('email'),
-  password: data.get('password'),
-}))
+export const selectUser = state => state.get('user')
+export const visits = createSelector(selectUser, user => user.get('visits'))
+export const settings = createSelector(selectUser, user => user.get('settings'))
+export const profile = createSelector(selectUser, user => user.get('profile').toObject())
+export const diseases = createSelector(selectUser, user => user.get('diseases'))
+export const userLetters = createSelector(selectUser, user => user.get('letters'))
+export const history = createSelector(visits, diseases, (v, d) => v && d && v.merge(d) || v || d)
 
-const selectRegister = state => state.get('register')
-export const registerData = createSelector(selectRegister, data => ({
-  name: data.get('name'),
-  email: data.get('email'),
-  password: data.get('password'),
-}))
+export const selectApp = state => state.get('app')
+export const notificationTypes = createSelector(selectApp, app => app.get('notificationTypes'))
+export const locations = createSelector(selectApp, app => app.get('locations'))
+export const letters = createSelector(selectApp, app => app.get('letters'))
+export const letterCategories = createSelector(selectApp, app => app.get('letterCategories'))
+export const cities = createSelector(selectApp, app => app.get('cities'))
 
-const selectHistory = state => state.get('history')
-export const historyData = createSelector(selectHistory, data => data.reverse())
-export const lastVisit = createSelector(selectHistory, data =>
-  data.size > 0
-  && data.last()
-  && data.last().last()
-  && data.last().last().toObject()
-  || false
-)
+export const notifications = state => state.get('notifications')
 
-const selectNotifications = state => state.get('notifications')
-export const notificationsData = createSelector(selectNotifications, data => data)
-
-const selectLocations = state => state.get('locations')
-export const locationsData = createSelector(selectLocations, data => data)
-
-const selectSettings = state => state.get('settings')
-export const settingsData = createSelector(selectSettings, data => data.toJS())
+export const snacks = state => state.get('snacks')
+export const lastSnack = createSelector(snacks, s => s.first())

@@ -1,17 +1,12 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-
-import { historyData, locationsData } from '../app/selectors'
-
+import { history } from '../app/selectors'
 import History from '../components/History'
 
 const mapStateToProps = createStructuredSelector({
-  historyData, locationsData
+  history
 })
 
-const mapDispatchToProps = dispatch => ({
-  refresh: () => dispatch({type: 'REFRESH'}),
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(History)

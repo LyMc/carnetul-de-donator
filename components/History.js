@@ -1,38 +1,33 @@
 import React from 'react'
-import {
-  Container,
-  Content,
-  Button,
-  Text,
-  Form,
-  Item,
-  Input,
-  Icon,
-  Card,
-  CardItem,
-  Body,
-  Thumbnail,
-  Left,
-  View,
-} from 'native-base'
-import Header from '../components/Header'
-
+import { Container, Content, Text, View } from 'native-base'
 import VisitCard from '../components/VisitCard'
+import DiseaseCard from '../components/DiseaseCard'
 
-export default ({ navigation, historyData, locationsData, refresh }) => {
+class Year {
+  constructor() {
+    this.year = 0
+  }
+  show(date) {
+    const year = new Date(date).getFullYear()
+    if (year !== this.year) {
+      this.year = year
+      return <Text style={{ textAlign: 'center', margin: 5, color: '#aaa' }}>{ year }</Text>
+    }
+  }
+}
+
+export default ({ history }) => {
+  const year = new Year()
   return (
     <Container>
-      <Header navigation={navigation} title="Istoric" refresh={ refresh }/>
-      <Content style={{padding: 5}}>
-        { historyData.map((yearVisits, year) =>
-          <View key={ year }>
-            <Text style={{textAlign: 'center', margin: 5, color: '#aaa'}}>{ year }</Text>
-            { yearVisits.reverse().map((item, key) =>
-              <VisitCard key={ key } item={ item.toObject() } locations={ item.get('city') ? locationsData.get(item.get('city')) : locationsData } />
-            ).toArray() }
+      <Content style={{ padding: 5 }}>
+        { history.map((item, key) => (
+          <View key={ key }>
+            {year.show(item.get('date')) }
+            { item.has('location') && <VisitCard item={ item }/> || <DiseaseCard item={ item } /> }
           </View>
-        ).toArray() }
-        <View style={{height: 50}}/>
+        )).toArray() }
+        <View style={{ height: 50 }}/>
       </Content>
     </Container>
   )

@@ -1,20 +1,22 @@
-import { call, put, take, takeEvery, takeLatest, select } from 'redux-saga/effects'
-import { loginData, registerData, userData, settingsData } from '../app/selectors'
+import { call, put, take, takeLatest, select } from 'redux-saga/effects'
+import { uid, selectUser } from '../app/selectors'
 import firebaseSaga from '../firebase-saga'
 
-function* doLogin() {
-  const login = yield select(loginData)
+function* doLogin({ payload }) {
+  const { email, password } = payload
   try {
-    yield call(firebaseSaga.login, login.email, login.password)
+    yield call(firebaseSaga.login, email, password)
+    yield put({ type: 'SNACKS/ADD', payload: 'Utilizator autentificat cu succes.'})
   } catch (error) {
-    console.log('error login', error)
+    yield put({ type: 'SNACKS/ADD', payload: 'Eroare autentificare utilizator.'})
   }
 }
 function* doLogout() {
   try {
     yield call(firebaseSaga.logout)
+    yield put({ type: 'SNACKS/ADD', payload: 'Utilizator deautentificat cu succes.'})
   } catch (error) {
-    console.log('error logout', error)
+    yield put({ type: 'SNACKS/ADD', payload: 'Eroare deautentificare utilizator.'})
   }
 }
 function* syncUser() {
@@ -22,66 +24,70 @@ function* syncUser() {
   while (true) {
     const { error, user } = yield take(channel)
     if (user) {
-      yield put({ type: 'SIGN_IN', payload: { name: user.displayName, email: user.email, uid: user.uid } })
-      yield put({ type: 'FETCH_USER_DATA' })
-      yield put({ type: 'FETCH_APP_DATA' })
+      yield put({ type: 'CHANGE_UID', payload: user.uid })
+      yield put({ type: 'FETCH_ALL' })
+      yield put({ type: 'SNACKS/ADD', payload: 'Utilizator autentificat cu succes.'})
     } else {
-      yield put({ type: 'SIGN_OUT' })
+      yield put({ type: 'CHANGE_UID', payload: false })
+      yield put({ type: 'SNACKS/ADD', payload: 'Pentru a putea folosi aplicația vă rugăm să vă autentificați.'})
+    }
+    if (error) {
+      yield put({ type: 'SNACKS/ADD', payload: 'Eroare autentificare utilizator.'})
     }
   }
 }
-function* signUp() {
-  const register = yield select(registerData)
+function* signUp({ payload }) {
+  const { email, password, name } = payload
   try {
-    const user = yield call(firebaseSaga.register, register.email, register.password, register.name)
-    yield put({ type: 'SIGN_IN', payload: { name: user.displayName, email: user.email, uid: user.uid } })
-    yield call(firebaseSaga.update, '/user/' + user.uid + '/settings', {name: register.name, city: 'București', needDonation: true})
+    const user = yield call(firebaseSaga.register, email, password, name)
+    yield call(firebaseSaga.update, '/users/' + user.uid, {
+      settings: { name: user.displayName, email: user.email, photo: user.photoURL },
+      letters: { welcome: new Date().getTime() },
+    })
+    yield call(firebaseSaga.update, '/notifications/' + user.uid + '/BASIC', true)
+    yield put({ type: 'FETCH_ALL' })
   } catch (error) {
     console.log('error sign up', error)
   }
 }
 function* fetchUserData() {
-  const user = yield select(userData)
+  const _uid = yield select(uid)
   try {
-    const data = yield call(firebaseSaga.get, '/user/' + user.uid)
-    if (data) {
-      yield put({ type: 'HISTORY/SAVE', payload: data.history || {} })
-      yield put({ type: 'NOTIFICATIONS/SAVE', payload: data.notifications || {} })
-      yield put({ type: 'SETTINGS/SAVE', payload: data.settings })
-    }
+    const user = yield call(firebaseSaga.get, '/users/' + _uid)
+    yield user && put({ type: 'USER/SET', payload: user })
   } catch (error) {
     console.log('error fetch data', error)
   }
 }
 function* fetchAppData() {
   try {
-    const data = yield call(firebaseSaga.get, '/app_v1')
-    if (data) {
-      yield put({ type: 'LOCATIONS/SAVE', payload: data.locations || {} })
-    }
+    const app = yield call(firebaseSaga.get, '/app')
+    yield app && put({ type: 'APP/SET', payload: app })
   } catch (error) {
     console.log('error fetch data', error)
   }
 }
-function* removeData(data) {
-  const user = yield select(userData)
+function* fetchNotificationsData() {
+  const _uid = yield select(uid)
   try {
-    yield call(firebaseSaga.delete, '/user/' + user.uid + '/' + data.payload.type + '/' + data.payload.key)
+    const notifications = yield call(firebaseSaga.get, '/notificatons/' + _uid)
+    yield notifications && put({ type: 'NOTIFICATIONS/SET', payload: notifications })
   } catch (error) {
     console.log('error fetch data', error)
   }
 }
-function* refresh() {
+function* fetchAll() {
   yield put({ type: 'FETCH_APP_DATA' })
   yield put({ type: 'FETCH_USER_DATA' })
+  yield put({ type: 'FETCH_NOTIFICATIONS_DATA' })
+  yield put({ type: 'SNACKS/ADD', payload: 'Date actualizate.'})
 }
-function* saveSettings() {
-  const settings = yield select(settingsData)
-  delete settings.updated
-  const user = yield select(userData)
+function* saveUserData({ payload }) {
+  const _uid = yield select(uid)
+  const user = yield select(selectUser)
   try {
-    yield call(firebaseSaga.update, '/user/' + user.uid + '/settings/', settings)
-    yield put({ type: 'SETTINGS/UPDATED' })
+    yield call(firebaseSaga.update, '/users/' + _uid + '/' + payload, user.get(payload).toObject())
+    yield put({ type: 'SNACKS/ADD', payload: 'Salvat.'})
   } catch (error) {
     console.log('error fetch data', error)
   }
@@ -102,16 +108,14 @@ function* saveSchedule({ payload }) {
 }
 
 export default function* rootSaga() {
-  yield takeLatest('DO_LOGIN', doLogin)
   yield takeLatest('SYNC_USER', syncUser)
-  yield takeLatest('DO_LOGOUT', doLogout)
   yield takeLatest('SIGN_UP', signUp)
+  yield takeLatest('DO_LOGIN', doLogin)
+  yield takeLatest('DO_LOGOUT', doLogout)
   yield takeLatest('FETCH_USER_DATA', fetchUserData)
   yield takeLatest('FETCH_APP_DATA', fetchAppData)
-  yield takeLatest('REFRESH', refresh)
-  yield takeLatest('SAVE_SETTINGS', saveSettings)
-  yield takeLatest('SAVE_SCHEDULE', saveSchedule)
-  yield takeEvery('REMOVE_DATA', removeData)
+  yield takeLatest('FETCH_NOTIFICATIONS_DATA', fetchNotificationsData)
+  yield takeLatest('FETCH_ALL', fetchAll)
+  yield takeLatest('SAVE_SETTINGS', saveUserData)
   yield put({ type: 'SYNC_USER' })
-  yield put({ type: 'FETCH_APP_DATA' })
 }

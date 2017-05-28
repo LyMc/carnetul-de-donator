@@ -35,6 +35,7 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 )
 sagaMiddleware.run(saga)
+console.ignoredYellowBox = ['Setting a timer'] // @todo: temporary solution, check this: https://github.com/facebook/react-native/issues/12981
 
 class AppContainer extends React.Component {
   state = {

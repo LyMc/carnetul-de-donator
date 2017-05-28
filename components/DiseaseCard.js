@@ -17,13 +17,18 @@ export default ({ item }) => (
           </Text>
         </View>
         <Body>
-          <Text>Vizită donație</Text>
+          <Text>{ item.get('name') }</Text>
           <Text note>{ item.get('status') }</Text>
         </Body>
       </Left>
     </CardItem>
     <CardItem>
-      <Text>{ item.get('location') }</Text>
+      <Text>{ item.get('symptoms') }</Text>
+      <Text>{ item.get('temp') }</Text>
+      <Text>{ item.get('drugs') }</Text>
+      <Text>{ item.get('doctorAdvice') }</Text>
+      <Text>{ item.get('notes') }</Text>
+      <Text>{ item.get('dateEnd') }</Text>
     </CardItem>
   </Card>
 )

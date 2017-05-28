@@ -1,18 +1,14 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { userData, settingsData, locationsData } from '../app/selectors'
+import { profile } from '../app/selectors'
 import Profile from '../components/Profile'
 
 const mapStateToProps = createStructuredSelector({
-  userData, settingsData, locationsData
+  profile
 })
 const mapDispatchToProps = dispatch => ({
-  doLogout: () => dispatch({type: 'DO_LOGOUT'}),
-  changeName: (payload) => dispatch({type: 'USER/CHANGE_NAME', payload}),
-  changeSettings: (field, value) => dispatch({type: 'SETTINGS/CHANGE', payload: {field, value}}),
-  refresh: () => dispatch({type: 'REFRESH'}),
-  save: () => dispatch({type: 'SAVE_SETTINGS'}),
+  change: (field, value) => dispatch({ type: 'USER/CHANGE', payload: { section: 'profile', field, value }}),
+  save: () => dispatch({ type: 'SAVE_SETTINGS', payload: 'profile' }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

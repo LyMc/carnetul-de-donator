@@ -1,75 +1,133 @@
 import { fromJS } from 'immutable'
+const now = new Date().getTime()
 
 const defaultState = fromJS({
+  uid: null,
   user: {
-    signed: null,
-    name: '',
-    email: '',
-    uid: '',
+    settings: {
+      email: '',
+      facebook: false,
+      google: false,
+      photo: '',
+      city: 'cityName',
+      location: 'locationKey',
+    },
+    profile: {
+      blood: '', // 0, a, b, ab
+      rh: '', // +, -
+      weight: '',
+      idSeries: '',
+      idNumber: '',
+      cnp: '',
+      lastName: '',
+      firstName: '',
+      sex: '', // m, w
+      birthday: '1999-12-31',
+      homeCounty: '',
+      homeCity: '',
+      homeStreet: '',
+      homeNumber: '',
+      father: '',
+      mother: '',
+      profession: '',
+      workName: '',
+      workCounty: '',
+      workCity: '',
+      workStreet: '',
+      workNumber: '',
+    },
+    visits: {
+      visitKey: {
+        date: now,
+        location: 'locationKey',
+        status: 'active', // done, cancelled
+      },
+    },
+    diseases: {
+      diseaseKey: {
+        name: '',
+        symptoms: '',
+        temp: '',
+        drugs: '',
+        doctorAdvice: '',
+        notes: '',
+        date: now,
+        dateEnd: now,
+        status: 'active', // done
+      },
+    },
+    letters: {
+      letterKey: now,
+    },
   },
-  login: {
-    email: '',
-    password: '',
+  app: {
+    notificationTypes: {
+      notificationTypeKey: {
+        title: true,
+        content: true,
+        schedule: true,
+        cantDismiss: true,
+      },
+    },
+    locations: {
+      locationKey: {
+        name: '',
+        city: 'cityName',
+        address: '',
+        addressLink: '',
+        hours: ['m', 't', 'w', 't', 'f', 's', 's'],
+        phone: '',
+        website: '',
+        latitude: 0,
+        longitude: 0,
+      },
+    },
+    letters: {
+      letterKey: {
+        title: '',
+        content: '',
+        category: 'categoryName',
+      },
+    },
+    letterCategories: {
+      categoryName: {
+        letterKey: true,
+      },
+    },
+    cities: {
+      cityName: {
+        locationKey: true,
+      },
+    },
   },
-  register: {
-    name: '',
-    email: '',
-    password: '',
+  notifications: {
+    BASIC: true,
+    notificationTypeKey: true,
   },
-  history: {},
-  notifications: {},
-  locations: {},
-  settings: {
-    updated: false,
-    birthday: {},
-    sex: 0,
-    city: '',
-    location: '',
-    weight: '',
-    blood: 0,
-    rh: '',
-    needDonation: false,
-  },
+  snacks: [],
 })
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case 'SIGN_IN':
-      return state.set('user', fromJS(action.payload)).setIn(['user', 'signed'], true)
-    case 'SIGN_OUT':
-      return defaultState.setIn(['user', 'signed'], false)
-    case 'USER/CHANGE_NAME':
-      return state.setIn(['user', 'name'], action.payload).setIn(['settings', 'updated'], true)
-    case 'SETTINGS/CHANGE':
-      return state.setIn(['settings', action.payload.field], fromJS(action.payload.value)).setIn(['settings', 'updated'], true)
-    case 'SETTINGS/UPDATED':
-      return state.setIn(['settings', 'updated'], false)
-    case 'CHANGE_LOGIN_DATA':
-      return state.setIn(['login', action.payload.field], action.payload.value)
-    case 'RESET_LOGIN_DATA':
-      return state.set('login', defaultState.get('login'))
-    case 'CHANGE_REGISTER_DATA':
-      return state.setIn(['register', action.payload.field], action.payload.value)
-    case 'RESET_REGISTER_DATA':
-      return state.set('register', defaultState.get('register'))
-    case 'HISTORY/SAVE':
-      return state.set('history', fromJS(action.payload))
+    case 'CHANGE_UID':
+      return state.set('uid', action.payload)
+    case 'USER/SET':
+      return state.set('user', fromJS(action.payload))
+    case 'APP/SET':
+      return state.set('app', fromJS(action.payload))
+    case 'NOTIFICATIONS/SET':
+      return state.set('notifications', fromJS(action.payload))
+    case 'SNACKS/ADD':
+      return state.update('snacks', snacks => snacks.push(action.payload))
+    case 'SNACKS/REMOVE':
+      return state.updateIn(['snacks'], snacks => snacks.shift())
+    case 'USER/CHANGE':
+      return state.setIn(['user', action.payload.section, action.payload.field], action.payload.value)
+
     case 'HISTORY/ADD':
       return state.updateIn(['history', action.year], history => history.push(action.payload))
-    case 'HISTORY/RESET':
-      return state.set('history', defaultState.get('history'))
-    case 'NOTIFICATIONS/SAVE':
-      return state.set('notifications', fromJS(action.payload))
     case 'NOTIFICATIONS/REMOVE':
       return state.deleteIn(['notifications', action.payload])
-    case 'NOTIFICATIONS/RESET':
-      return state.set('notifications', defaultState.get('notifications'))
-    case 'SETTINGS/SAVE':
-      return state.set('settings', fromJS(action.payload))
-    case 'SETTINGS/RESET':
-      return state.set('settings', defaultState.get('settings'))
-    case 'LOCATIONS/SAVE':
-      return state.set('locations', fromJS(action.payload))
     default:
       return state
   }
