@@ -3,7 +3,8 @@ const now = new Date().getTime()
 
 const defaultState = fromJS({
   uid: null,
-  user: {
+  user: {},
+  userDefaults: {
     settings: {
       email: '',
       facebook: false,

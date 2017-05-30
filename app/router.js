@@ -5,6 +5,7 @@ import { Icon, View, Text, List, ListItem } from 'native-base'
 import LogoSecondaryBig from '../assets/images/logo-secondary-big.jpg'
 import RefreshButton from '../containers/RefreshButton'
 import MenuButton from '../containers/MenuButton'
+import LogoutButton from '../containers/LogoutButton'
 
 import LoginScreen from '../containers/LoginScreen'
 import RegisterScreen from '../containers/RegisterScreen'
@@ -12,6 +13,8 @@ import HomeScreen from '../containers/HomeScreen'
 import HistoryScreen from '../containers/HistoryScreen'
 import LettersScreen from '../containers/LettersScreen'
 import ProfileScreen from '../containers/ProfileScreen'
+import SettingsScreen from '../containers/SettingsScreen'
+import AboutScreen from '../containers/AboutScreen'
 //import NotificationsScreen from '../containers/NotificationsScreen'
 //import ScheduleScreen from '../containers/ScheduleScreen'
 //import LocationsScreen from '../containers/LocationsScreen'
@@ -62,6 +65,8 @@ const stackSettings = (screen, title, showMenu = false) => ({
 const StackRouter = StackNavigator({
   Tabs: stackSettings(TabRouter, 'Acasă', true),
   Profile: stackSettings(ProfileScreen, 'Contul meu'),
+  Settings: stackSettings(SettingsScreen, 'Setări'),
+  About: stackSettings(AboutScreen, 'Despre proiect'),
 }, {
   initialRouteName: 'Tabs',
 })
@@ -69,6 +74,7 @@ const StackRouter = StackNavigator({
 drawerItems = [
   {label: 'Contul meu', route: 'Profile'},
   {label: 'Setări', route: 'Settings'},
+  {label: 'Despre proiect', route: 'About'},
 ]
 
 export const MainRouter = DrawerNavigator({
@@ -79,17 +85,20 @@ export const MainRouter = DrawerNavigator({
   contentOptions: {
     activeTintColor: '#0a71b2',
   },
-  contentComponent: props => <View>
-    <Image source={ LogoSecondaryBig } style={{ width: 320, height: 180 }}/>
-    <List>
-      { drawerItems.map(item => (
-        <ListItem key={ item.route } onPress={() => props.navigation.navigate(item.route)}
-        >
-          <Text>{item.label}</Text>
-        </ListItem>
-      )) }
-    </List>
-  </View>,
+  contentComponent: props => (
+    <View style={{ flex: 1, position: 'relative', paddingBottom: 50 }}>
+      <Image source={ LogoSecondaryBig } style={{ width: 320, height: 180 }}/>
+      <List style={{ width: '100%' }}>
+        { drawerItems.map(item => (
+          <ListItem key={ item.route } onPress={() => props.navigation.navigate(item.route)}
+          >
+            <Text>{item.label}</Text>
+          </ListItem>
+        )) }
+      </List>
+      <LogoutButton/>
+    </View>
+  ),
 })
 
 export const AuthRouter = StackNavigator({
