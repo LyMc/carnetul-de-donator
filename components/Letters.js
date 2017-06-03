@@ -1,24 +1,18 @@
 import React from 'react'
 import { Container, Content, Text, Card, CardItem, View } from 'native-base'
 
-export default ({ userLetters, letters, letterCategories }) => (
+export default ({ navigation, userLetters, letters }) => (
   <Container>
     <Content style={{ padding: 5 }}>
-      { letterCategories.map((catLetters, catName) => (
-        <View key={ catName }>
-          <Text style={{ margin: 5, color: '#aaa' }}>{ catName }</Text>
-          { catLetters.map((_, letterKey) => (
-            <Card key={ letterKey }>
-              <CardItem>
-                <Text>{ letters.getIn([letterKey, 'title']) }</Text>
-                <Text note>{ userLetters.has(letterKey) ? 'Read' : 'New' }</Text>
-              </CardItem>
-              <CardItem>
-                <Text>{ letters.getIn([letterKey, 'content']) }</Text>
-              </CardItem>
-            </Card>
-          )).toArray() }
-        </View>
+      { letters.map((letter, key) => (
+        <Card key={ key }>
+          <CardItem style={{ backgroundColor: '#0a71b2' }} button onPress={() => navigation.navigate('Letter', { title: letter.get('title'), key }) }>
+            <View>
+              <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#fff' }}>{ letter.get('title') }</Text>
+              <Text note>{ userLetters.has(key) ? 'Citit' : 'Nou' }</Text>
+            </View>
+          </CardItem>
+        </Card>
       )).toArray() }
       <View style={{ height: 50 }}/>
     </Content>

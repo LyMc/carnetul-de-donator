@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { uid } from '../app/selectors'
+import { uid, nextVisit, selectUser, locations } from '../app/selectors'
 import Home from '../components/Home'
 
-const mapStateToProps = createStructuredSelector({
-  uid,
+const mapStateToProps = createStructuredSelector({ uid, nextVisit, selectUser, locations })
+const mapDispatchToProps = dispatch => ({
+  newVisit: () => dispatch({ type: 'NEW_VISIT' }),
+  editVisit: (payload) => dispatch({ type: 'EDIT_VISIT', payload }),
+  removeVisit: (payload) => dispatch({ type: 'REMOVE_VISIT', payload }),
 })
-
-const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

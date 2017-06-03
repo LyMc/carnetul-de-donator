@@ -15,8 +15,9 @@ import LettersScreen from '../containers/LettersScreen'
 import ProfileScreen from '../containers/ProfileScreen'
 import SettingsScreen from '../containers/SettingsScreen'
 import AboutScreen from '../containers/AboutScreen'
+import NewScheduleScreen from '../containers/NewScheduleScreen'
+import LetterScreen from '../containers/LetterScreen'
 //import NotificationsScreen from '../containers/NotificationsScreen'
-//import ScheduleScreen from '../containers/ScheduleScreen'
 //import LocationsScreen from '../containers/LocationsScreen'
 
 const navigationOptions = (label, iconName) => ({
@@ -44,6 +45,7 @@ const TabRouter = TabNavigator({
   History: tabSettings(HistoryScreen, 'md-list'),
   Letters: tabSettings(LettersScreen, 'md-mail'),
 }, {
+  initialRouteName: 'Home',
   tabBarOptions: {
     showIcon: true, showLabel: false, style: {
       backgroundColor: '#ff6659',
@@ -55,7 +57,7 @@ const TabRouter = TabNavigator({
 const stackSettings = (screen, title, showMenu = false) => ({
   screen,
   navigationOptions: ({ navigation }) => ({
-    title,
+    title: title || navigation.state.params.title,
     headerStyle: { backgroundColor: '#d32f2f' },
     headerTitleStyle: { color: '#fff' },
     headerLeft: <MenuButton navigation={ navigation } showMenu={ showMenu }/>,
@@ -67,6 +69,8 @@ const StackRouter = StackNavigator({
   Profile: stackSettings(ProfileScreen, 'Contul meu'),
   Settings: stackSettings(SettingsScreen, 'Setări'),
   About: stackSettings(AboutScreen, 'Despre proiect'),
+  NewSchedule: stackSettings(NewScheduleScreen, 'Programează-mă'),
+  Letter: stackSettings(LetterScreen, false),
 }, {
   initialRouteName: 'Tabs',
 })

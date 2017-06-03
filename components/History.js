@@ -15,16 +15,30 @@ class Year {
     }
   }
 }
+class CurrentVisit {
+  constructor() {
+    this.today = new Date().getTime()
+    this.future = true
+  }
+  check(date) {
+    if (!this.future) return false
+    if (date > this.today) return true
+    else this.future = false
+    return false
+  }
+}
 
-export default ({ history }) => {
+export default ({ navigation, history, locations, editVisit, removeVisit }) => {
   const year = new Year()
+  const checkVisit = new CurrentVisit()
   return (
     <Container>
       <Content style={{ padding: 5 }}>
+        { history.size === 0 && <Text>Nu există înregistrări în istoric.</Text>}
         { history.map((item, key) => (
           <View key={ key }>
             {year.show(item.get('date')) }
-            { item.has('location') && <VisitCard item={ item }/> || <DiseaseCard item={ item } /> }
+            { item.has('location') && <VisitCard item={ item } locations={ locations } edit={ checkVisit.check(item.get('date')) ? () => editVisit(key) && navigation.navigate('NewSchedule') : null } remove={ checkVisit.check(item.get('date')) ? () => removeVisit(key) : null }/> || <DiseaseCard item={ item } /> }
           </View>
         )).toArray() }
         <View style={{ height: 50 }}/>

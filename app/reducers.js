@@ -82,17 +82,22 @@ const defaultState = fromJS({
         latitude: 0,
         longitude: 0,
       },
+      secondLocationKey: {
+        name: 'Locație 2',
+        city: 'cityName',
+        address: '',
+        addressLink: '',
+        hours: ['m', 't', 'w', 't', 'f', 's', 's'],
+        phone: '',
+        website: '',
+        latitude: 0,
+        longitude: 0,
+      },
     },
     letters: {
       letterKey: {
         title: '',
         content: '',
-        category: 'categoryName',
-      },
-    },
-    letterCategories: {
-      categoryName: {
-        letterKey: true,
       },
     },
     cities: {
@@ -106,6 +111,11 @@ const defaultState = fromJS({
     notificationTypeKey: true,
   },
   snacks: [],
+  router: {
+    screen: '',
+    type: '',
+    key: '',
+  },
 })
 
 export default (state = defaultState, action) => {
@@ -124,6 +134,8 @@ export default (state = defaultState, action) => {
       return state.updateIn(['snacks'], snacks => snacks.shift())
     case 'USER/CHANGE':
       return state.setIn(['user', action.payload.section, action.payload.field], action.payload.value)
+    case 'ROUTER/CHANGE':
+      return state.set('router', fromJS(action.payload))
 
     case 'HISTORY/ADD':
       return state.updateIn(['history', action.year], history => history.push(action.payload))

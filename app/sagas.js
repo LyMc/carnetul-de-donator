@@ -1,5 +1,5 @@
 import { call, put, take, takeLatest, select } from 'redux-saga/effects'
-import { uid, selectUser } from '../app/selectors'
+import { uid, selectUser, settings } from '../app/selectors'
 import firebaseSaga from '../firebase-saga'
 
 function* doLogin({ payload }) {
@@ -41,7 +41,7 @@ function* signUp({ payload }) {
   try {
     const user = yield call(firebaseSaga.register, email, password, name)
     yield call(firebaseSaga.update, '/users/' + user.uid, {
-      settings: { name: user.displayName, email: user.email, photo: user.photoURL },
+      settings: { name: user.displayName, email: user.email, photo: user.photoURL, location: '-key123' },
       letters: { welcome: new Date().getTime() },
     })
     yield call(firebaseSaga.update, '/notifications/' + user.uid + '/BASIC', true)
@@ -93,15 +93,46 @@ function* saveUserData({ payload }) {
   }
 }
 function* saveSchedule({ payload }) {
-  yield put({ type: 'SAVE_SETTINGS' })
-  const user = yield select(userData)
-  const settings = yield select(settingsData)
+  yield put({ type: 'SAVE_SETTINGS', payload: 'settings' })
+  const _uid = yield select(uid)
+  const _settings = yield select(settings)
   try {
-    yield call(firebaseSaga.create, '/user/' + user.uid + '/history/' + payload.year, {
-      title: 'Programare donație',
-      location: settings.location,
-      date: payload.date,
-    })
+    let visitKey = payload.key
+    const visit = { location: _settings.get('location'), date: payload.date, status: 'Programare' }
+    if (payload.key) {
+      yield call(firebaseSaga.update, '/users/' + _uid + '/visits/' + payload.key, visit)
+      yield put({ type: 'SNACKS/ADD', payload: 'Programarea a fost modificată.' })
+    } else {
+      visitKey = yield call(firebaseSaga.create, '/users/' + _uid + '/visits/', visit)
+      yield put({ type: 'SNACKS/ADD', payload: 'Programarea a fost înregistrată.' })
+    }
+    yield put({ type: 'FETCH_USER_DATA' })
+    yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Schedule', type: 'view', key: visitKey } })
+  } catch (error) {
+    console.log('error fetch data', error)
+  }
+}
+function* removeVisit({ payload }) {
+  const _uid = yield select(uid)
+  try {
+    yield call(firebaseSaga.patch, '/users/' + _uid + '/visits/' + payload, { status: 'Anulată'})
+    yield put({ type: 'SNACKS/ADD', payload: 'Programarea a fost anulată.' })
+    yield put({ type: 'FETCH_USER_DATA' })
+    yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Schedule', type: 'view', key: payload } })
+  } catch (error) {
+    console.log('error fetch data', error)
+  }
+}
+function* editVisit({ payload }) {
+  try {
+    yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Schedule', type: 'edit', key: payload } })
+  } catch (error) {
+    console.log('error fetch data', error)
+  }
+}
+function* newVisit() {
+  try {
+    yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Schedule', type: 'add', key: '' } })
   } catch (error) {
     console.log('error fetch data', error)
   }
@@ -117,5 +148,9 @@ export default function* rootSaga() {
   yield takeLatest('FETCH_NOTIFICATIONS_DATA', fetchNotificationsData)
   yield takeLatest('FETCH_ALL', fetchAll)
   yield takeLatest('SAVE_SETTINGS', saveUserData)
+  yield takeLatest('SAVE_SCHEDULE', saveSchedule)
+  yield takeLatest('REMOVE_VISIT', removeVisit)
+  yield takeLatest('EDIT_VISIT', editVisit)
+  yield takeLatest('NEW_VISIT', newVisit)
   yield put({ type: 'SYNC_USER' })
 }

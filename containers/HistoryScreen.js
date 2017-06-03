@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { history } from '../app/selectors'
+import { history, locations } from '../app/selectors'
 import History from '../components/History'
 
-const mapStateToProps = createStructuredSelector({
-  history
+const mapStateToProps = createStructuredSelector({ history, locations })
+const mapDispatchToProps = dispatch => ({
+  editVisit: (payload) => dispatch({ type: 'EDIT_VISIT', payload }),
+  removeVisit: (payload) => dispatch({ type: 'REMOVE_VISIT', payload }),
 })
-
-const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(History)
