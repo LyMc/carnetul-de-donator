@@ -1,11 +1,10 @@
 import React from 'react'
 import { TabNavigator, DrawerNavigator, StackNavigator, DrawerItems } from 'react-navigation'
-import { Image } from 'react-native'
 import { Icon, View, Text, List, ListItem } from 'native-base'
-import LogoSecondaryBig from '../assets/images/logo-secondary-big.jpg'
 import RefreshButton from '../containers/RefreshButton'
 import MenuButton from '../containers/MenuButton'
 import LogoutButton from '../containers/LogoutButton'
+import Menu from '../components/Menu'
 
 import LoginScreen from '../containers/LoginScreen'
 import RegisterScreen from '../containers/RegisterScreen'
@@ -91,7 +90,7 @@ export const MainRouter = DrawerNavigator({
   },
   contentComponent: props => (
     <View style={{ flex: 1, position: 'relative', paddingBottom: 50 }}>
-      <Image source={ LogoSecondaryBig } style={{ width: 320, height: 180 }}/>
+      <Menu/>
       <List style={{ width: '100%' }}>
         { drawerItems.map(item => (
           <ListItem key={ item.route } onPress={() => props.navigation.navigate(item.route)}
