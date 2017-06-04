@@ -78,7 +78,7 @@ function* signUp({ payload }) {
     const user = yield call(firebaseSaga.register, email, password, name)
     yield call(firebaseSaga.update, '/users/' + user.uid, {
       settings: { name: user.displayName, email: user.email, photo: user.photoURL, location: '-key123' },
-      letters: { welcome: new Date().getTime() },
+      letters: { "--welcome": new Date().getTime() },
     })
     yield call(firebaseSaga.update, '/notifications/' + user.uid + '/BASIC', true)
     yield put({ type: 'FETCH_ALL' })
@@ -193,10 +193,10 @@ function* addDisease({ payload }) {
     if (key) {
       delete payload.key
       yield call(firebaseSaga.update, path + key, payload)
-      yield put({ type: 'SHOW_SNACK', payload: 'Programarea a fost modificată.' })
+      yield put({ type: 'SHOW_SNACK', payload: 'Notița a fost actualizată.' })
     } else {
       key = yield call(firebaseSaga.create, path, payload)
-      yield put({ type: 'SHOW_SNACK', payload: 'Programarea a fost înregistrată.' })
+      yield put({ type: 'SHOW_SNACK', payload: 'Notița a fost adăugată în istoricul medical.' })
     }
     yield put({ type: 'FETCH_USER_DATA' })
     yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Diseases', type: 'view', key } })
@@ -208,7 +208,7 @@ function* removeDisease({ payload }) {
   const _uid = yield select(uid)
   try {
     yield call(firebaseSaga.delete, '/users/' + _uid + '/diseases/' + payload)
-    yield put({ type: 'SHOW_SNACK', payload: 'Înregistrarea a fost ștearsă.' })
+    yield put({ type: 'SHOW_SNACK', payload: 'Notița a fost ștearsă din istoricul medical.' })
     yield put({ type: 'FETCH_USER_DATA' })
     yield put({ type: 'ROUTER/CHANGE', payload: { screen: 'Diseases', type: 'add', key: '' } })
   } catch (error) {

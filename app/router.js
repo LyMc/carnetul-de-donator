@@ -70,7 +70,7 @@ const StackRouter = StackNavigator({
   About: stackSettings(AboutScreen, 'Despre proiect'),
   NewSchedule: stackSettings(NewScheduleScreen, 'Programează-mă'),
   Letter: stackSettings(LetterScreen, false),
-  Disease: stackSettings(DiseaseScreen, 'Boli'),
+  Disease: stackSettings(DiseaseScreen, 'Istoric medical'),
 }, {
   initialRouteName: 'Tabs',
 })

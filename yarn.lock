@@ -3513,9 +3513,9 @@ send@0.13.2:
     range-parser "~1.0.3"
     statuses "~1.2.1"
 
-sentry-expo@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-1.0.0.tgz#2dc1fdc28f285324cb399ab73649a774a1acc764"
+sentry-expo@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sentry-expo/-/sentry-expo-1.0.2.tgz#70a9e7c53c905d0e10bc8af7cf6378fd56ac336f"
   dependencies:
     "@expo/spawn-async" "^1.2.8"
     mkdirp "^0.5.1"

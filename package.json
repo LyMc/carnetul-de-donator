@@ -18,6 +18,6 @@
     "redux": "^3.6.0",
     "redux-saga": "^0.15.3",
     "reselect": "^3.0.1",
-    "sentry-expo": "^1.0.0"
+    "sentry-expo": "^1.0.2"
   }
 }
