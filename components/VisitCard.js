@@ -9,8 +9,8 @@ export default ({ item, locations, edit, remove }) => {
   const date = new Date(item.get('date'))
   const location = locations ? locations.get(item.get('location')) : null
   return (
-    <Card>
-      <CardItem>
+    <Card style={{ backgroundColor: item.get('status') === 'Anulată' ? '#ddd' : '#fff' }}>
+      <CardItem style={{ backgroundColor: item.get('status') === 'Anulată' ? '#ddd' : '#fff' }}>
         <Left>
           <Thumbnail square size={ 70 } source={ appLogo }/>
           <View style={{ position: 'absolute', left: 18, top: 4, width: 40, height: 45, backgroundColor: '#0FF0' }}>
@@ -27,7 +27,7 @@ export default ({ item, locations, edit, remove }) => {
           </Body>
         </Left>
       </CardItem>
-      <CardItem style={{ flexWrap: 'wrap' }}>
+      <CardItem style={{ flexWrap: 'wrap', backgroundColor: item.get('status') === 'Anulată' ? '#ddd' : '#fff' }}>
         <Icon name="md-time" />
         <Text>Ora: { ('0' + date.getUTCHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) } { location && '(Deschis: ' + location.get('hours').split(';')[date.getDay()] + ')'}</Text>
       </CardItem>

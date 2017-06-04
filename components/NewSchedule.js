@@ -103,40 +103,6 @@ export default class NewSchedule extends React.Component {
     const { settings, locations, myRouter, visits, change, save, edit, remove } = this.props
     const day = this.state.date ? new Date(this.state.date).getDay() : null
     const hours = this.state.date ? locations.getIn([settings.get('location'), 'hours']).split(';')[day] : null
-    if (myRouter.screen === 'Schedule' && myRouter.type === 'edit') {
-      return (
-        <Container>
-          <KeyboardHandler ref='kh' offset={ 80 }>
-            <Form>
-              <FormItem label="Locație">
-                <Picker
-                  style={{ width: '100%' }}
-                  supportedOrientations={[ 'portrait', 'landscape' ]}
-                  iosHeader="Locație"
-                  mode="dialog"
-                  selectedValue={ settings.get('location') }
-                  onValueChange={ (value) => change('location', value) }
-                >
-                  <Picker.Item label="" value=""/>
-                  { locations.map((location, key) => <Picker.Item key={ key } label={location.get('name')} value={ key }/>).toArray() }
-                </Picker>
-              </FormItem>
-              <FormItem label="Data" button onPress={ () => showDatePicker(this.state.date, (date) => this.setState({ date })) }>
-                <Input disabled value={ renderDate(this.state.date) } style={{ paddingLeft: 12 }}/>
-              </FormItem>
-              <FormItem label="Ora" button onPress={ () => showTimePicker(this.state.time, (time) => this.setState({ time })) } error={ validateTime(this.state.time, hours) }>
-                <Input disabled value={ this.state.time } style={{ paddingLeft: 12 }}/>
-              </FormItem>
-            </Form>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 22 }}>
-              <Button info onPress={ () => save(new Date(this.state.date + 'T' + this.state.time).getTime(), myRouter.key) } disabled={ !this.state.time || !this.state.date || validateTime(this.state.time, hours) || !settings.get('location') }>
-                <Text>Salvează</Text>
-              </Button>
-            </View>
-          </KeyboardHandler>
-        </Container>
-      )
-    }
     if (myRouter.screen === 'Schedule' && myRouter.type === 'view') {
       return (
         <Container>
@@ -166,15 +132,15 @@ export default class NewSchedule extends React.Component {
             <FormItem label="Data" button onPress={ () => showDatePicker(this.state.date, (date) => this.setState({ date })) }>
               <Input disabled value={ renderDate(this.state.date) } style={{ paddingLeft: 12 }}/>
             </FormItem>
-            <FormItem label="Ora" button onPress={ () => showTimePicker(this.state.time, (time) => this.setState({ time })) } error={ validateTime(this.state.time, hours) }>
+            <FormItem label="Ora" button onPress={ () => showTimePicker(this.state.time, (time) => this.setState({ time })) }>
               <Input disabled value={ this.state.time } style={{ paddingLeft: 12 }}/>
             </FormItem>
-            { hours && validateTime(this.state.time, hours) && <FormItem>
-              <Text>Program { week[day] }: { hours }</Text>
+            { hours && validateTime(this.state.time, hours) && <FormItem style={{ alignItems: 'flex-start' }}>
+              <Text style={{ color: '#d32f2f' }}>Program { week[day] }: { hours }</Text>
             </FormItem> }
           </Form>
           <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 22 }}>
-            <Button info onPress={ () => save(new Date(this.state.date + 'T' + this.state.time).getTime()) } disabled={ !this.state.time || !this.state.date || validateTime(this.state.time, hours) || !settings.get('location') }>
+            <Button info onPress={ () => save(new Date(this.state.date + 'T' + this.state.time).getTime(), myRouter.screen === 'Schedule' && myRouter.type === 'edit' && myRouter.key || null) } disabled={ !this.state.time || !this.state.date || validateTime(this.state.time, hours) || !settings.get('location') }>
               <Text>Salvează</Text>
             </Button>
           </View>

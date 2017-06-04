@@ -15,53 +15,23 @@ export default class Settings extends React.Component {
         <KeyboardHandler ref='kh' offset={ 80 }>
           <Form>
             <FormItem label="E-mail">
-              <Input keyboardType="email-address" value={ settings.email } style={{ paddingLeft: 12 }} onChangeText={(value) => change('email', value)} ref="email" onFocus={() => this.refs.kh.inputFocused(this, 'email')}/>
+              <Input disabled keyboardType="email-address" value={ settings.get('email') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('email', value)} ref="email" onFocus={() => this.refs.kh.inputFocused(this, 'email')}/>
+            </FormItem>
+            <FormItem label="Nume">
+              <Input value={ settings.get('name') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('name', value)} ref="name" onFocus={() => this.refs.kh.inputFocused(this, 'name')}/>
             </FormItem>
             <FormItem label="Oraș">
-              <Input value={ settings.city } style={{ paddingLeft: 12 }} onChangeText={(value) => change('city', value)} ref="city" onFocus={() => this.refs.kh.inputFocused(this, 'city')}/>
-            </FormItem>
-            <FormItem label="Locație preferată">
-              <Input value={ settings.location } style={{ paddingLeft: 12 }} onChangeText={(value) => change('location', value)} ref="location" onFocus={() => this.refs.kh.inputFocused(this, 'location')}/>
+              <Input value={ settings.get('city') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('city', value)} ref="city" onFocus={() => this.refs.kh.inputFocused(this, 'city')}/>
             </FormItem>
             <FormItem label="Facebook">
-              <Input value={ settings.facebook } style={{ paddingLeft: 12 }} onChangeText={(value) => change('facebook', value)} ref="facebook" onFocus={() => this.refs.kh.inputFocused(this, 'facebook')}/>
+              <Input disabled value={ settings.get('facebook') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('facebook', value)} ref="facebook" onFocus={() => this.refs.kh.inputFocused(this, 'facebook')}/>
             </FormItem>
             <FormItem label="Google">
-              <Input value={ settings.google } style={{ paddingLeft: 12 }} onChangeText={(value) => change('google', value)} ref="google" onFocus={() => this.refs.kh.inputFocused(this, 'google')}/>
+              <Input disabled value={ settings.get('google') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('google', value)} ref="google" onFocus={() => this.refs.kh.inputFocused(this, 'google')}/>
             </FormItem>
             <FormItem label="Poză profil">
-              <Input value={ settings.photo } style={{ paddingLeft: 12 }} onChangeText={(value) => change('photo', value)} ref="photo" onFocus={() => this.refs.kh.inputFocused(this, 'photo')}/>
+              <Input disabled value={ settings.get('photo') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('photo', value)} ref="photo" onFocus={() => this.refs.kh.inputFocused(this, 'photo')}/>
             </FormItem>
-
-            {/*
-             <Item stackedLabel>
-              <Label style={{ paddingLeft: 7 }}>Oraș</Label>
-              <Picker
-                style={{ width: '100%' }}
-                supportedOrientations={[ 'portrait', 'landscape' ]}
-                iosHeader="Oraș"
-                mode="dialog"
-                selectedValue={ settingsData.city }
-                onValueChange={ (value) => changeSettings('city', value) }
-              >
-                { locationsData.map((_, city) => <Picker.Item key={ city } label={ city } value={ city } />).toArray()}
-              </Picker>
-             </Item>
-             <Item stackedLabel style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}>
-              <Label style={{ paddingLeft: 7, width: '100%' }}>Grupa Sanguină</Label>
-              <Picker
-                style={{ width: 110 }}
-                supportedOrientations={[ 'portrait', 'landscape' ]}
-                iosHeader="Grupa"
-                mode="dropdown"
-                selectedValue={ settingsData.blood }
-                onValueChange={ (value) => changeSettings('blood', value) }
-              >
-                <Picker.Item label="Grupa" value="0"/>
-                <Picker.Item label="0" value="1"/>
-              </Picker>
-             </Item>
-           */}
           </Form>
           {/*<ListItem button onPress={ () => changeSettings('needDonation', !settingsData.needDonation) }>
            <Switch value={ settingsData.needDonation } onValueChange={ () => changeSettings('needDonation', !settingsData.needDonation) } />

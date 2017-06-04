@@ -65,12 +65,6 @@ export default class Profile extends React.Component {
             <FormItem label="CNP">
               <Input keyboardType="numeric" value={ profile.cnp } style={{ paddingLeft: 12 }} onChangeText={(value) => change('cnp', value)} ref="cnp" onFocus={() => this.refs.kh.inputFocused(this, 'cnp')} maxLength={ 13 }/>
             </FormItem>
-            <FormItem label="Numele">
-              <Input value={ profile.lastName } style={{ paddingLeft: 12 }} onChangeText={(value) => change('lastName', value)} ref="lastName" onFocus={() => this.refs.kh.inputFocused(this, 'lastName')}/>
-            </FormItem>
-            <FormItem label="Prenumele">
-              <Input value={ profile.firstName } style={{ paddingLeft: 12 }} onChangeText={(value) => change('firstName', value)} ref="firstName" onFocus={() => this.refs.kh.inputFocused(this, 'firstName')}/>
-            </FormItem>
             <FormItem label="Sexul" style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <FormRadio field="sex" item="M" label="Barbat" value={ profile.sex } change={ change }/>
               <FormRadio field="sex" item="W" label="Femeie" value={ profile.sex } change={ change }/>

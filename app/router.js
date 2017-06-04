@@ -17,8 +17,7 @@ import SettingsScreen from '../containers/SettingsScreen'
 import AboutScreen from '../containers/AboutScreen'
 import NewScheduleScreen from '../containers/NewScheduleScreen'
 import LetterScreen from '../containers/LetterScreen'
-//import NotificationsScreen from '../containers/NotificationsScreen'
-//import LocationsScreen from '../containers/LocationsScreen'
+import DiseaseScreen from '../containers/DiseaseScreen'
 
 const navigationOptions = (label, iconName) => ({
   drawerLabel: label, drawerIcon: ({ tintColor }) => <Icon name={ iconName } style={{ color: tintColor }}/>,
@@ -71,6 +70,7 @@ const StackRouter = StackNavigator({
   About: stackSettings(AboutScreen, 'Despre proiect'),
   NewSchedule: stackSettings(NewScheduleScreen, 'Programează-mă'),
   Letter: stackSettings(LetterScreen, false),
+  Disease: stackSettings(DiseaseScreen, 'Boli'),
 }, {
   initialRouteName: 'Tabs',
 })

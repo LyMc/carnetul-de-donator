@@ -12,11 +12,9 @@ export const settings = createSelector(selectUser, user => user.get('settings') 
 export const profile = createSelector(selectUser, user => user.get('profile') && user.get('profile').toObject() || empty)
 export const diseases = createSelector(selectUser, user => user.get('diseases') || empty)
 export const userLetters = createSelector(selectUser, user => user.get('letters') || empty)
-export const history = createSelector(visits, diseases, (v, d) => (v && d && v.merge(d) || v || d).sort((a, b) => {
-  if (a.get('date') < b.get('date')) return 1
-  else return -1
-}) || empty)
+export const history = createSelector(visits, diseases, (v, d) => (v && d && v.merge(d) || v || d).sort((a, b) => a.get('date') < b.get('date') ? 1 : -1) || empty)
 export const nextVisit = createSelector(visits, (visits, key) => visits.filter(visit => visit.get('status') === 'Programare' && visit.get('date') > today) || empty)
+export const currentDiseases = createSelector(diseases, diseases => diseases.filter(disease => disease.has('dateEnd') && disease.get('dateEnd') > today || !disease.get('dateEnd')))
 
 export const selectApp = state => state.get('app') || empty
 export const notificationTypes = createSelector(selectApp, app => app.get('notificationTypes') || empty)

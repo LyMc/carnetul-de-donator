@@ -48,13 +48,11 @@ const defaultState = fromJS({
       diseaseKey: {
         name: '',
         symptoms: '',
-        temp: '',
         drugs: '',
         doctorAdvice: '',
         notes: '',
         date: now,
         dateEnd: now,
-        status: 'active', // done
       },
     },
     letters: {
@@ -110,7 +108,6 @@ const defaultState = fromJS({
     BASIC: true,
     notificationTypeKey: true,
   },
-  snacks: [],
   router: {
     screen: '',
     type: '',
@@ -128,19 +125,10 @@ export default (state = defaultState, action) => {
       return state.set('app', fromJS(action.payload))
     case 'NOTIFICATIONS/SET':
       return state.set('notifications', fromJS(action.payload))
-    case 'SNACKS/ADD':
-      return state.update('snacks', snacks => snacks.push(action.payload))
-    case 'SNACKS/REMOVE':
-      return state.updateIn(['snacks'], snacks => snacks.shift())
     case 'USER/CHANGE':
       return state.setIn(['user', action.payload.section, action.payload.field], action.payload.value)
     case 'ROUTER/CHANGE':
       return state.set('router', fromJS(action.payload))
-
-    case 'HISTORY/ADD':
-      return state.updateIn(['history', action.year], history => history.push(action.payload))
-    case 'NOTIFICATIONS/REMOVE':
-      return state.deleteIn(['notifications', action.payload])
     default:
       return state
   }

@@ -3,7 +3,7 @@ import { call } from 'redux-saga/effects'
 
 function * login (email, password) {
   const auth = this.app.auth()
-  const { credential } = yield call([auth, auth.signInWithEmailAndPassword], email, password)
+  const credential = yield call([auth, auth.signInWithEmailAndPassword], email, password)
 
   return credential
 }

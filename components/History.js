@@ -28,7 +28,7 @@ class CurrentVisit {
   }
 }
 
-export default ({ navigation, history, locations, editVisit, removeVisit }) => {
+export default ({ navigation, history, editVisit, removeVisit }) => {
   const year = new Year()
   const checkVisit = new CurrentVisit()
   return (
@@ -38,7 +38,7 @@ export default ({ navigation, history, locations, editVisit, removeVisit }) => {
         { history.map((item, key) => (
           <View key={ key }>
             {year.show(item.get('date')) }
-            { item.has('location') && <VisitCard item={ item } locations={ locations } edit={ checkVisit.check(item.get('date')) ? () => editVisit(key) && navigation.navigate('NewSchedule') : null } remove={ checkVisit.check(item.get('date')) ? () => removeVisit(key) : null }/> || <DiseaseCard item={ item } /> }
+            { item.has('location') && <VisitCard item={ item } edit={ checkVisit.check(item.get('date')) ? () => editVisit(key) && navigation.navigate('NewSchedule') : null } remove={ checkVisit.check(item.get('date')) ? () => removeVisit(key) : null }/> || <DiseaseCard item={ item } /> }
           </View>
         )).toArray() }
         <View style={{ height: 50 }}/>
