@@ -12,6 +12,7 @@ class FirebaseSaga {
 
     // Authentication methods
     this.login = auth.login.bind(this)
+    this.signInWithCredential = auth.signInWithCredential.bind(this)
     this.logout = auth.logout.bind(this)
     this.authChannel = auth.authChannel.bind(this)
     this.register = auth.register.bind(this)

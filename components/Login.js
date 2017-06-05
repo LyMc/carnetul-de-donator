@@ -10,9 +10,13 @@ export default class Login extends React.Component {
     }
   }
   render() {
-    const { navigation, doLogin } = this.props
+    const { navigation, doLogin, loginWithFacebook } = this.props
     return (
       <Content contentContainerStyle={{ position: 'relative', flex: 1, justifyContent: 'center', paddingBottom: 70 }}>
+        <Button full onPress={ loginWithFacebook } style={{ margin: 15, backgroundColor: '#4267b2' }}>
+          <Text>Autentifică-te cu Facebook</Text>
+        </Button>
+        <Text style={{ width: '100%', textAlign: 'center', color: '#777' }}>sau</Text>
         <Form style={{ paddingRight: 15 }}>
           <Item>
             <Icon name="md-at"/>
@@ -24,7 +28,7 @@ export default class Login extends React.Component {
           </Item>
         </Form>
         <Button full onPress={ () => doLogin(this.state.email, this.state.password) } style={{ margin: 15 }}>
-          <Text>Autentifică-te</Text>
+          <Text>Autentifică-te cu e-mail</Text>
         </Button>
         <Button full transparent onPress={() => navigation.navigate('Register')} style={{ position: 'absolute', bottom: 15, width: '100%' }}>
           <Text>Creează cont</Text>

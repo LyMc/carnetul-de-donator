@@ -1,6 +1,6 @@
 import { call, put, take, takeLatest, select } from 'redux-saga/effects'
 import { ToastAndroid } from 'react-native'
-import { Permissions, Notifications } from 'expo'
+import { Permissions, Notifications, Facebook } from 'expo'
 import { uid, selectUser, settings } from '../app/selectors'
 import firebaseSaga from '../firebase-saga'
 
@@ -45,14 +45,25 @@ function* doLogout() {
     yield put({ type: 'SHOW_SNACK', payload: 'Eroare deautentificare utilizator.'})
   }
 }
+function* loginWithFacebook() {
+  try {
+    const { type, token } = yield call(Facebook.logInWithReadPermissionsAsync, '301000843692361', { permissions: [ 'public_profile', 'email' ] })
+    if (type === 'success') {
+      yield call(firebaseSaga.signInWithCredential, token)
+    }
+  } catch (error) {
+    console.log('error sagas loginWithFacebook', error)
+  }
+}
 function* syncUser() {
   const channel = yield call(firebaseSaga.authChannel)
   while (true) {
     const { error, user } = yield take(channel)
     if (user) {
       yield put({ type: 'CHANGE_UID', payload: user.uid })
-      yield put({ type: 'FETCH_ALL' })
       yield put({ type: 'SHOW_SNACK', payload: 'Utilizator autentificat cu succes.'})
+      yield put({ type: 'FETCH_ALL' })
+
       const { existingStatus } = yield call(Permissions.getAsync, Permissions.REMOTE_NOTIFICATIONS)
       let finalStatus = existingStatus
       if (existingStatus !== 'granted') {
@@ -63,8 +74,37 @@ function* syncUser() {
         const token = yield call(Notifications.getExponentPushTokenAsync)
         yield call(firebaseSaga.update, '/notifications/' + user.uid + '/EXPO_TOKEN', token)
       }
+
+      const existingUser = yield call(firebaseSaga.get, '/notifications/' + user.uid + '/BASIC')
+      if (!existingUser) {
+        const providerData = user.providerData[0]
+        let userData = {
+          location: '-key123',
+        }
+        if (providerData && providerData.providerId === 'password') {
+          userData.email = providerData.email
+          userData.name = providerData.displayName
+        } else if (providerData && providerData.providerId === 'facebook.com') {
+          userData.email = providerData.email
+          userData.name = providerData.displayName
+          userData.photo = providerData.photoURL
+          userData.facebook = providerData.uid
+        } else {
+          userData.email = user.email
+          userData.name = user.displayName
+          userData.photo = user.photoURL
+        }
+        yield call(firebaseSaga.update, '/users/' + user.uid, {
+          settings: userData,
+          letters: { "--welcome": new Date().getTime() },
+        })
+        yield call(firebaseSaga.update, '/notifications/' + user.uid + '/BASIC', true)
+        yield put({ type: 'FETCH_ALL' })
+      }
     } else {
       yield put({ type: 'CHANGE_UID', payload: false })
+      yield put({ type: 'USER/RESET' })
+      yield put({ type: 'NOTIFICATIONS/RESET' })
       yield put({ type: 'SHOW_SNACK', payload: 'Pentru a putea folosi aplicația vă rugăm să vă autentificați.'})
     }
     if (error) {
@@ -75,13 +115,7 @@ function* syncUser() {
 function* signUp({ payload }) {
   const { email, password, name } = payload
   try {
-    const user = yield call(firebaseSaga.register, email, password, name)
-    yield call(firebaseSaga.update, '/users/' + user.uid, {
-      settings: { name: user.displayName, email: user.email, photo: user.photoURL, location: '-key123' },
-      letters: { "--welcome": new Date().getTime() },
-    })
-    yield call(firebaseSaga.update, '/notifications/' + user.uid + '/BASIC', true)
-    yield put({ type: 'FETCH_ALL' })
+    yield call(firebaseSaga.register, email, password, name)
   } catch (error) {
     let message = 'Eroare create cont.'
     switch (error.code) {
@@ -230,6 +264,7 @@ export default function* rootSaga() {
   yield takeLatest('SIGN_UP', signUp)
   yield takeLatest('DO_LOGIN', doLogin)
   yield takeLatest('DO_LOGOUT', doLogout)
+  yield takeLatest('LOGIN_WITH_FACEBOOK', loginWithFacebook)
 
   yield takeLatest('FETCH_USER_DATA', fetchUserData)
   yield takeLatest('FETCH_APP_DATA', fetchAppData)

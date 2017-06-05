@@ -23,15 +23,12 @@ export default class Settings extends React.Component {
             <FormItem label="Oraș">
               <Input value={ settings.get('city') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('city', value)} ref="city" onFocus={() => this.refs.kh.inputFocused(this, 'city')}/>
             </FormItem>
-            <FormItem label="Facebook">
+            { settings.get('facebook') && <FormItem label="Facebook">
               <Input disabled value={ settings.get('facebook') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('facebook', value)} ref="facebook" onFocus={() => this.refs.kh.inputFocused(this, 'facebook')}/>
-            </FormItem>
-            <FormItem label="Google">
-              <Input disabled value={ settings.get('google') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('google', value)} ref="google" onFocus={() => this.refs.kh.inputFocused(this, 'google')}/>
-            </FormItem>
-            <FormItem label="Poză profil">
-              <Input disabled value={ settings.get('photo') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('photo', value)} ref="photo" onFocus={() => this.refs.kh.inputFocused(this, 'photo')}/>
-            </FormItem>
+            </FormItem> }
+            {/*<FormItem label="Poză profil">*/}
+              {/*<Input disabled value={ settings.get('photo') } style={{ paddingLeft: 12 }} onChangeText={(value) => change('photo', value)} ref="photo" onFocus={() => this.refs.kh.inputFocused(this, 'photo')}/>*/}
+            {/*</FormItem>*/}
           </Form>
           {/*<ListItem button onPress={ () => changeSettings('needDonation', !settingsData.needDonation) }>
            <Switch value={ settingsData.needDonation } onValueChange={ () => changeSettings('needDonation', !settingsData.needDonation) } />

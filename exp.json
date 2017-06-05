@@ -4,7 +4,7 @@
   "slug": "carnetul-de-donator",
   "privacy": "public",
   "sdkVersion": "17.0.0",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "orientation": "portrait",
   "primaryColor": "#d32f2f",
   "icon": "./assets/icons/app.png",
@@ -30,5 +30,6 @@
         "apiKey": "AIzaSyBJWJg9Z9ZQHoyX2ZVUksWHJGia_J9To2I"
       }
     }
-  }
+  },
+  "facebookScheme": "fb301000843692361"
 }

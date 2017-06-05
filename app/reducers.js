@@ -8,7 +8,6 @@ const defaultState = fromJS({
     settings: {
       email: '',
       facebook: false,
-      google: false,
       photo: '',
       city: 'cityName',
       location: 'locationKey',
@@ -80,17 +79,6 @@ const defaultState = fromJS({
         latitude: 0,
         longitude: 0,
       },
-      secondLocationKey: {
-        name: 'Locație 2',
-        city: 'cityName',
-        address: '',
-        addressLink: '',
-        hours: ['m', 't', 'w', 't', 'f', 's', 's'],
-        phone: '',
-        website: '',
-        latitude: 0,
-        longitude: 0,
-      },
     },
     letters: {
       letterKey: {
@@ -121,10 +109,14 @@ export default (state = defaultState, action) => {
       return state.set('uid', action.payload)
     case 'USER/SET':
       return state.set('user', fromJS(action.payload))
+    case 'USER/RESET':
+      return state.set('user', defaultState.get('user'))
     case 'APP/SET':
       return state.set('app', fromJS(action.payload))
     case 'NOTIFICATIONS/SET':
       return state.set('notifications', fromJS(action.payload))
+    case 'NOTIFICATIONS/RESET':
+      return state.set('notifications', defaultState.get('notifications'))
     case 'USER/CHANGE':
       return state.setIn(['user', action.payload.section, action.payload.field], action.payload.value)
     case 'ROUTER/CHANGE':
