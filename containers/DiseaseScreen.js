@@ -9,6 +9,7 @@ const mapDispatchToProps = dispatch => ({
   save: (payload) => dispatch({ type: 'ADD_DISEASE', payload }),
   remove: (payload) => dispatch({ type: 'REMOVE_DISEASE', payload }),
   open: (payload = null) => dispatch({ type: 'OPEN_DISEASE', payload }),
+  log: (event, props) => dispatch({ type: 'LOG_EVENT', payload: { event, props} }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Disease)

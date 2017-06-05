@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
   save: (date, key = null) => dispatch({ type: 'SAVE_SCHEDULE', payload: { date, key } }),
   edit: (payload) => dispatch({ type: 'EDIT_VISIT', payload }),
   remove: (payload) => dispatch({ type: 'REMOVE_VISIT', payload }),
+  log: (event, props) => dispatch({ type: 'LOG_EVENT', payload: { event, props} }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewSchedule)

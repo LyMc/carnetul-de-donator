@@ -37,6 +37,12 @@ const FormRadio = ({label = false, field, item, value, change}) => (
   <Button transparent dark onPress={() => change(field, item)}><Radio selected={ value === item } onPress={() => change(field, item)}/><Text style={{ paddingHorizontal: 10 }}>{ label || item }</Text></Button>
 )
 export default class Profile extends React.Component {
+  componentDidMount() {
+    this.props.log('Mount', { component: 'Profile' })
+  }
+  componentWillUnmount() {
+    this.props.log('Unmount', { component: 'Profile' })
+  }
   render() {
     const { profile, change, save } = this.props
     return (

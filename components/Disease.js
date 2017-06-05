@@ -53,9 +53,13 @@ export default class NewSchedule extends React.Component {
   }
   componentDidMount() {
     this.props.myRouter.type === 'edit' && this.onEdit(this.props)
+    this.props.log('Mount', { component: 'Disease' })
   }
   componentWillReceiveProps(nextProps) {
     nextProps.myRouter.type === 'edit' && this.props.myRouter.type !== 'edit' && this.onEdit(nextProps)
+  }
+  componentWillUnmount() {
+    this.props.log('Unmount', { component: 'Disease' })
   }
   render() {
     const { myRouter, diseases, save, remove, open } = this.props

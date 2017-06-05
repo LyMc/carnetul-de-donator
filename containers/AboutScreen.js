@@ -5,6 +5,8 @@ import About from '../components/About'
 
 const mapStateToProps = createStructuredSelector({ uid })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  log: (event, props) => dispatch({ type: 'LOG_EVENT', payload: { event, props} }),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(About)

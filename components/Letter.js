@@ -12,9 +12,11 @@ export default class Letter extends React.Component {
   }
   componentDidMount() {
     setTimeout(() => this.setState({ loaded: true }), 0)
+    this.props.log('Mount', { component: 'Letter', key: this.props.navigation.state.params.key, title: this.props.navigation.state.params.title })
   }
   componentWillUnmount() {
     this.setState({ loaded: false })
+    this.props.log('Unmount', { component: 'Letter' })
   }
   render() {
     return (

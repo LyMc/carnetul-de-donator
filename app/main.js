@@ -1,4 +1,4 @@
-import Expo from 'expo'
+import { AppLoading, registerRootComponent, Amplitude } from 'expo'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -36,6 +36,9 @@ const store = createStore(
 )
 sagaMiddleware.run(saga)
 console.ignoredYellowBox = ['Setting a timer'] // @todo: temporary solution, check this: https://github.com/facebook/react-native/issues/12981
+
+Amplitude.initialize('5df77301f4886e04a8547281130aa12f')
+Amplitude.logEvent('Init')
 
 class AppContainer extends React.Component {
   state = {
@@ -79,9 +82,9 @@ class AppContainer extends React.Component {
         </View>
       </Provider>
     } else {
-      return <Expo.AppLoading />
+      return <AppLoading />
     }
   }
 }
 
-Expo.registerRootComponent(AppContainer)
+registerRootComponent(AppContainer)

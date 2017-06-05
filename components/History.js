@@ -28,21 +28,31 @@ class CurrentVisit {
   }
 }
 
-export default ({ navigation, history, editVisit, removeVisit }) => {
-  const year = new Year()
-  const checkVisit = new CurrentVisit()
-  return (
-    <Container>
-      <Content style={{ padding: 5 }}>
-        { history.size === 0 && <Text>Nu există înregistrări în istoric.</Text>}
-        { history.map((item, key) => (
-          <View key={ key }>
-            {year.show(item.get('date')) }
-            { item.has('location') && <VisitCard item={ item } edit={ checkVisit.check(item.get('date')) ? () => editVisit(key) && navigation.navigate('NewSchedule') : null } remove={ checkVisit.check(item.get('date')) ? () => removeVisit(key) : null }/> || <DiseaseCard item={ item } /> }
-          </View>
-        )).toArray() }
-        <View style={{ height: 50 }}/>
-      </Content>
-    </Container>
-  )
+export default class History extends React.Component {
+  componentDidMount() {
+    this.props.log('Mount', { component: 'History' })
+  }
+  componentWillUnmount() {
+    this.props.log('Unmount', { component: 'History' })
+  }
+  render() {
+    const { navigation, history, editVisit, removeVisit } = this.props
+    const year = new Year()
+    const checkVisit = new CurrentVisit()
+    return (
+      <Container>
+        <Content style={{ padding: 5 }}>
+          { history.size === 0 && <Text>Nu există înregistrări în istoric.</Text>}
+          { history.map((item, key) => (
+            <View key={ key }>
+              {year.show(item.get('date')) }
+              { item.has('location') && <VisitCard item={ item } edit={ checkVisit.check(item.get('date')) ? () => editVisit(key) && navigation.navigate('NewSchedule') : null } remove={ checkVisit.check(item.get('date')) ? () => removeVisit(key) : null }/> || <DiseaseCard item={ item } /> }
+            </View>
+          )).toArray() }
+          <View style={{ height: 50 }}/>
+        </Content>
+      </Container>
+    )
+  }
 }
+

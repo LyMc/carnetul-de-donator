@@ -8,6 +8,12 @@ const FormItem = ({label, children, ...props}) => (
   </Item>
 )
 export default class Settings extends React.Component {
+  componentDidMount() {
+    this.props.log('Mount', { component: 'Settings' })
+  }
+  componentWillUnmount() {
+    this.props.log('Unmount', { component: 'Settings' })
+  }
   render() {
     const { settings, change, save } = this.props
     return (

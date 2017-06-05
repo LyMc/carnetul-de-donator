@@ -1,6 +1,6 @@
 import React from 'react'
 import { DatePickerAndroid, TimePickerAndroid } from 'react-native'
-import { Container, Content, Button, Text, Form, Input, Item, ListItem, Label, View, Picker, CheckBox, Switch, Icon } from 'native-base'
+import { Container, Content, Button, Text, Form, Input, Item, Label, View, Picker } from 'native-base'
 import KeyboardHandler from '../app/KeyboardHandler'
 import { getMonth } from '../app/utils'
 import VisitCard from '../components/VisitCard'
@@ -87,6 +87,7 @@ export default class NewSchedule extends React.Component {
         })
       }
     }
+    this.props.log('Mount', { component: 'Schedule' })
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.myRouter.type === 'edit' && this.props.myRouter.type !== 'edit') {
@@ -98,6 +99,9 @@ export default class NewSchedule extends React.Component {
         })
       }
     }
+  }
+  componentWillUnmount() {
+    this.props.log('Unmount', { component: 'Schedule' })
   }
   render() {
     const { settings, locations, myRouter, visits, change, save, edit, remove } = this.props
