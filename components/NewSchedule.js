@@ -1,5 +1,5 @@
 import React from 'react'
-import { DatePickerAndroid, TimePickerAndroid } from 'react-native'
+import { Platform, DatePickerAndroid, TimePickerAndroid, DatePickerIOS } from 'react-native'
 import { Container, Content, Button, Text, Form, Input, Item, Label, View, Picker } from 'native-base'
 import KeyboardHandler from '../app/KeyboardHandler'
 import { getMonth } from '../app/utils'
@@ -133,12 +133,18 @@ export default class NewSchedule extends React.Component {
                 { locations.map((location, key) => <Picker.Item key={ key } label={location.get('name') + ' ' + location.get('city')} value={ key } />).toArray() }
               </Picker>
             </FormItem>
-            <FormItem label="Data" button onPress={ () => showDatePicker(this.state.date, (date) => this.setState({ date })) }>
+            { Platform.OS === 'ios' && <FormItem label="Data">
+              <DatePickerIOS date={ this.state.date } mode="date" onDateChange={ date => this.setState({ date }) } />
+            </FormItem> }
+            { Platform.OS === 'ios' && <FormItem label="Ora">
+              <DatePickerIOS date={ this.state.time } mode="time" onDateChange={ time => this.setState({ time }) } />
+            </FormItem> }
+            { Platform.OS === 'android' && <FormItem label="Data" button onPress={ () => showDatePicker(this.state.date, (date) => this.setState({ date })) }>
               <Input disabled value={ renderDate(this.state.date) } style={{ paddingLeft: 12 }}/>
-            </FormItem>
-            <FormItem label="Ora" button onPress={ () => showTimePicker(this.state.time, (time) => this.setState({ time })) }>
+            </FormItem> }
+            { Platform.OS === 'android' && <FormItem label="Ora" button onPress={ () => showTimePicker(this.state.time, (time) => this.setState({ time })) }>
               <Input disabled value={ this.state.time } style={{ paddingLeft: 12 }}/>
-            </FormItem>
+            </FormItem> }
             { hours && validateTime(this.state.time, hours) && <FormItem style={{ alignItems: 'flex-start' }}>
               <Text style={{ color: '#d32f2f' }}>Program { week[day] }: { hours }</Text>
             </FormItem> }
