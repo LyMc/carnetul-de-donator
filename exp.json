@@ -24,6 +24,7 @@
     "bundleIdentifier": "ro.locoman.carnet"
   },
   "android": {
+    "versionCode": 2,
     "package": "ro.locoman.carnet",
     "config": {
       "googleMaps": {
