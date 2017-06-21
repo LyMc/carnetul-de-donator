@@ -1,11 +1,13 @@
 import { call, put, take, takeLatest, select } from 'redux-saga/effects'
-import { ToastAndroid } from 'react-native'
+import { Platform, ToastAndroid } from 'react-native'
 import { Permissions, Notifications, Facebook, Amplitude } from 'expo'
 import { uid, selectUser, settings } from '../app/selectors'
 import firebaseSaga from '../firebase-saga'
 
 function* showSnack({ payload }) {
-  yield call(ToastAndroid.show, payload, ToastAndroid.SHORT)
+  if (Platform.OS === 'android') {
+    yield call(ToastAndroid.show, payload, ToastAndroid.SHORT)
+  }
   yield put({ type: 'LOG_EVENT', payload: { event: 'Snack', props: { message: payload }} })
 }
 function* logEvent({ payload }) {

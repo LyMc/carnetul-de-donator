@@ -50,6 +50,7 @@ const TabRouter = TabNavigator({
     }, indicatorStyle: {
       backgroundColor: '#0a71b2',
     },
+    inactiveTintColor: '#fff',
   },
 })
 const stackSettings = (screen, title, showMenu = false) => ({
