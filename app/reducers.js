@@ -16,25 +16,8 @@ const defaultState = fromJS({
       blood: '', // 0, a, b, ab
       rh: '', // +, -
       weight: '',
-      idSeries: '',
-      idNumber: '',
-      cnp: '',
-      lastName: '',
-      firstName: '',
       sex: '', // m, w
       birthday: '1999-12-31',
-      homeCounty: '',
-      homeCity: '',
-      homeStreet: '',
-      homeNumber: '',
-      father: '',
-      mother: '',
-      profession: '',
-      workName: '',
-      workCounty: '',
-      workCity: '',
-      workStreet: '',
-      workNumber: '',
     },
     visits: {
       visitKey: {
@@ -94,7 +77,6 @@ const defaultState = fromJS({
   },
   notifications: {
     BASIC: true,
-    notificationTypeKey: true,
   },
   router: {
     screen: '',

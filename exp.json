@@ -3,8 +3,8 @@
   "description": "Carnetul donatorului de sange",
   "slug": "carnetul-de-donator",
   "privacy": "public",
-  "sdkVersion": "17.0.0",
-  "version": "2.1.0",
+  "sdkVersion": "18.0.0",
+  "version": "2.2.0",
   "orientation": "portrait",
   "primaryColor": "#d32f2f",
   "icon": "./assets/icons/app.png",
@@ -24,7 +24,7 @@
     "bundleIdentifier": "ro.locoman.carnet"
   },
   "android": {
-    "versionCode": 2,
+    "versionCode": 3,
     "package": "ro.locoman.carnet",
     "config": {
       "googleMaps": {

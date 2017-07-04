@@ -162,7 +162,7 @@ function* fetchUserData() {
     const user = yield call(firebaseSaga.get, '/users/' + _uid)
     yield user && put({ type: 'USER/SET', payload: user })
   } catch (error) {
-    console.log('error sagas fetchUserData')
+    console.error('fetchUserData')
   }
 }
 function* fetchAppData() {
@@ -176,7 +176,7 @@ function* fetchAppData() {
 function* fetchNotificationsData() {
   const _uid = yield select(uid)
   try {
-    const notifications = yield call(firebaseSaga.get, '/notificatons/' + _uid)
+    const notifications = yield call(firebaseSaga.get, '/notifications/' + _uid)
     yield notifications && put({ type: 'NOTIFICATIONS/SET', payload: notifications })
   } catch (error) {
     console.log('error sagas fetchNotificationsData')
@@ -196,6 +196,9 @@ function* saveUserData({ payload }) {
   const user = yield select(selectUser)
   try {
     yield call(firebaseSaga.update, '/users/' + _uid + '/' + payload, user.get(payload).toObject())
+    if (payload === 'profile') {
+      yield call(firebaseSaga.update, '/notifications/' + _uid + '/BLOOD/', user.getIn(['profile', 'blood']) + user.getIn(['profile', 'rh']))
+    }
     yield put({ type: 'SHOW_SNACK', payload: 'Salvat.'})
     yield put({ type: 'LOG_EVENT', payload: { event: 'Success', props: { action: 'SaveUserData' }} })
   } catch (error) {
@@ -306,6 +309,27 @@ function* openDisease({ payload }) {
     yield put({ type: 'LOG_EVENT', payload: { event: 'Error', props: { action: 'OpenDisease', type: payload ? 'edit' : 'add' }} })
   }
 }
+function* removeNotification({ payload: key }) {
+  yield put({ type: 'LOG_EVENT', payload: { event: 'Try', props: { action: 'removeNotification', key }} })
+  const _uid = yield select(uid)
+  try {
+    yield call(firebaseSaga.delete, '/notifications/' + _uid + '/' + key)
+    yield put({ type: 'FETCH_NOTIFICATIONS_DATA' })
+    yield put({ type: 'LOG_EVENT', payload: { event: 'Success', props: { action: 'removeNotification', key }} })
+  } catch (error) {
+    console.log('error sagas openDisease')
+    yield put({ type: 'LOG_EVENT', payload: { event: 'Error', props: { action: 'removeNotification', key }} })
+  }
+}
+function* removeLetter({ payload: key }) {
+  const _uid = yield select(uid)
+  try {
+    yield call(firebaseSaga.delete, '/users/' + _uid + '/letters/' + key)
+    yield put({ type: 'FETCH_USER_DATA' })
+  } catch (error) {
+    console.log('error sagas openDisease')
+  }
+}
 
 export default function* rootSaga() {
   yield takeLatest('SHOW_SNACK', showSnack)
@@ -327,6 +351,8 @@ export default function* rootSaga() {
   yield takeLatest('REMOVE_VISIT', removeVisit) // REMOVE_VISIT
   yield takeLatest('EDIT_VISIT', editVisit) // OPEN_VISIT
   yield takeLatest('NEW_VISIT', newVisit)
+  yield takeLatest('REMOVE_NOTIFICATION', removeNotification)
+  yield takeLatest('REMOVE_LETTER', removeLetter)
 
   yield takeLatest('ADD_DISEASE', addDisease)
   yield takeLatest('REMOVE_DISEASE', removeDisease)

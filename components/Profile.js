@@ -62,15 +62,6 @@ export default class Profile extends React.Component {
             <FormItem label="Greutate">
               <Input keyboardType="numeric" value={ profile.weight } style={{ paddingLeft: 12 }} onChangeText={(value) => change('weight', value)} ref="weight" onFocus={() => this.refs.kh.inputFocused(this, 'weight')}/>
             </FormItem>
-            <FormItem label="Serie buletin">
-              <Input value={ profile.idSeries } style={{ paddingLeft: 12 }} onChangeText={(value) => change('idSeries', value)} ref="idSeries" onFocus={() => this.refs.kh.inputFocused(this, 'idSeries')}/>
-            </FormItem>
-            <FormItem label="Număr buletin">
-              <Input value={ profile.idNumber } style={{ paddingLeft: 12 }} onChangeText={(value) => change('idNumber', value)} ref="idNumber" onFocus={() => this.refs.kh.inputFocused(this, 'idNumber')}/>
-            </FormItem>
-            <FormItem label="CNP">
-              <Input keyboardType="numeric" value={ profile.cnp } style={{ paddingLeft: 12 }} onChangeText={(value) => change('cnp', value)} ref="cnp" onFocus={() => this.refs.kh.inputFocused(this, 'cnp')} maxLength={ 13 }/>
-            </FormItem>
             <FormItem label="Sexul" style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <FormRadio field="sex" item="M" label="Barbat" value={ profile.sex } change={ change }/>
               <FormRadio field="sex" item="W" label="Femeie" value={ profile.sex } change={ change }/>
@@ -78,71 +69,6 @@ export default class Profile extends React.Component {
             <FormItem label="Data nașterii" button onPress={ () => showPicker(profile.birthday, change) }>
               <Input disabled value={ renderBirthday(profile.birthday) } style={{ paddingLeft: 12 }}/>
             </FormItem>
-            <FormItem label="Județ domiciliu">
-              <Input value={ profile.homeCounty } style={{ paddingLeft: 12 }} onChangeText={(value) => change('homeCounty', value)} ref="homeCounty" onFocus={() => this.refs.kh.inputFocused(this, 'homeCounty')}/>
-            </FormItem>
-            <FormItem label="Localitatea">
-              <Input value={ profile.homeCity } style={{ paddingLeft: 12 }} onChangeText={(value) => change('homeCity', value)} ref="homeCity" onFocus={() => this.refs.kh.inputFocused(this, 'homeCity')}/>
-            </FormItem>
-            <FormItem label="Strada">
-              <Input value={ profile.homeStreet } style={{ paddingLeft: 12 }} onChangeText={(value) => change('homeStreet', value)} ref="homeStreet" onFocus={() => this.refs.kh.inputFocused(this, 'homeStreet')}/>
-            </FormItem>
-            <FormItem label="Număr">
-              <Input value={ profile.homeNumber } style={{ paddingLeft: 12 }} onChangeText={(value) => change('homeNumber', value)} ref="homeNumber" onFocus={() => this.refs.kh.inputFocused(this, 'homeNumber')}/>
-            </FormItem>
-            <FormItem label="Tata">
-              <Input value={ profile.father } style={{ paddingLeft: 12 }} onChangeText={(value) => change('father', value)} ref="father" onFocus={() => this.refs.kh.inputFocused(this, 'father')}/>
-            </FormItem>
-            <FormItem label="Mama">
-              <Input value={ profile.mother } style={{ paddingLeft: 12 }} onChangeText={(value) => change('mother', value)} ref="mother" onFocus={() => this.refs.kh.inputFocused(this, 'mother')}/>
-            </FormItem>
-            <FormItem label="Profesia (ocupația)">
-              <Input value={ profile.profession } style={{ paddingLeft: 12 }} onChangeText={(value) => change('profession', value)} ref="profession" onFocus={() => this.refs.kh.inputFocused(this, 'profession')}/>
-            </FormItem>
-            <FormItem label="Întreprinderea (instituția)">
-              <Input value={ profile.workName } style={{ paddingLeft: 12 }} onChangeText={(value) => change('workName', value)} ref="workName" onFocus={() => this.refs.kh.inputFocused(this, 'workName')}/>
-            </FormItem>
-            <FormItem label="din județul">
-              <Input value={ profile.workCounty } style={{ paddingLeft: 12 }} onChangeText={(value) => change('workCounty', value)} ref="workCounty" onFocus={() => this.refs.kh.inputFocused(this, 'workCounty')}/>
-            </FormItem>
-            <FormItem label="Localitatea">
-              <Input value={ profile.workCity } style={{ paddingLeft: 12 }} onChangeText={(value) => change('workCity', value)} ref="workCity" onFocus={() => this.refs.kh.inputFocused(this, 'workCity')}/>
-            </FormItem>
-            <FormItem label="Strada">
-              <Input value={ profile.workStreet } style={{ paddingLeft: 12 }} onChangeText={(value) => change('workStreet', value)} ref="workStreet" onFocus={() => this.refs.kh.inputFocused(this, 'workStreet')}/>
-            </FormItem>
-            <FormItem label="Număr">
-              <Input value={ profile.workNumber } style={{ paddingLeft: 12 }} onChangeText={(value) => change('workNumber', value)} ref="workNumber" onFocus={() => this.refs.kh.inputFocused(this, 'workNumber')}/>
-            </FormItem>
-
-            {/*
-             <Item stackedLabel>
-             <Label style={{ paddingLeft: 7 }}>Oraș</Label>
-             <Picker
-             style={{ width: '100%' }}
-             supportedOrientations={[ 'portrait', 'landscape' ]}
-             iosHeader="Oraș"
-             mode="dialog"
-             selectedValue={ settingsData.city }
-             onValueChange={ (value) => changeSettings('city', value) }
-             >
-             { locationsData.map((_, city) => <Picker.Item key={ city } label={ city } value={ city } />).toArray()}
-             </Picker>
-             </Item>
-             <Item stackedLabel style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}>
-             <Label style={{ paddingLeft: 7, width: '100%' }}>Grupa Sanguină</Label>
-             <Picker
-             style={{ width: 110 }}
-             supportedOrientations={[ 'portrait', 'landscape' ]}
-             iosHeader="Grupa"
-             mode="dropdown"
-             selectedValue={ settingsData.blood }
-             onValueChange={ (value) => changeSettings('blood', value) }
-             >
-             <Picker.Item label="Grupa" value="0"/>
-             <Picker.Item label="0" value="1"/>
-             </Picker>
-             </Item>*/}
           </Form>
           {/*<ListItem button onPress={ () => changeSettings('needDonation', !settingsData.needDonation) }>
            <Switch value={ settingsData.needDonation } onValueChange={ () => changeSettings('needDonation', !settingsData.needDonation) } />
